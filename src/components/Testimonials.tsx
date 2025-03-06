@@ -17,7 +17,7 @@ const testimonials = [
     company: 'InnovateCorp',
     position: 'Marketing Director',
     image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
-    content: 'We've worked with several agencies in the past, but none have delivered the level of quality and ROI that this team consistently provides. They're true partners in our success.'
+    content: "We've worked with several agencies in the past, but none have delivered the level of quality and ROI that this team consistently provides. They're true partners in our success."
   },
   {
     name: 'Sophia Rodriguez',

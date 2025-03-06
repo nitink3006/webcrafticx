@@ -28,7 +28,7 @@ const services = [
   {
     icon: <Lightbulb size={32} />,
     title: 'Brand Strategy',
-    description: 'We help define and articulate your brand's vision, values, and voice to strengthen market positioning.'
+    description: "We help define and articulate your brand's vision, values, and voice to strengthen market positioning."
   },
   {
     icon: <Globe size={32} />,
