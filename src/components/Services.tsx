@@ -42,7 +42,7 @@ const Services = () => {
   const isInView = useInView(ref, { once: false, amount: 0.2 });
   
   return (
-    <section id="services" className="section bg-background relative z-20">
+    <section id="services" className="section bg-slate-50 relative z-20">
       <motion.div 
         ref={ref}
         className="max-w-screen-xl mx-auto"
@@ -78,12 +78,12 @@ const Services = () => {
           {services.map((service, index) => (
             <motion.div 
               key={index}
-              className="bg-white p-8 rounded-xl shadow-sm border border-border/50 hover:shadow-md transition-all duration-300"
+              className="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300"
               variants={fadeUp}
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
             >
               <motion.div 
-                className="w-16 h-16 rounded-lg bg-primary/5 text-primary flex items-center justify-center mb-5"
+                className="w-16 h-16 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5"
                 whileHover={{ 
                   rotate: [0, -10, 10, -10, 0],
                   transition: { duration: 0.5 }
@@ -92,7 +92,7 @@ const Services = () => {
                 {service.icon}
               </motion.div>
               <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-              <p className="text-foreground/70">{service.description}</p>
+              <p className="text-foreground/80">{service.description}</p>
             </motion.div>
           ))}
         </div>

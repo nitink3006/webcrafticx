@@ -1,4 +1,3 @@
-
 import React, { useRef, useState } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
@@ -55,7 +54,7 @@ const Testimonials = () => {
   const testimonial = testimonials[currentIndex];
   
   return (
-    <section id="testimonials" className="section relative z-20 overflow-hidden bg-gradient-to-b from-background to-secondary/30">
+    <section id="testimonials" className="section relative z-20 overflow-hidden bg-gradient-to-b from-slate-100 to-slate-200/80">
       <motion.div 
         ref={ref}
         className="max-w-screen-xl mx-auto"
@@ -101,7 +100,7 @@ const Testimonials = () => {
           <AnimatePresence mode="wait">
             <motion.div 
               key={currentIndex}
-              className="bg-white rounded-xl p-8 md:p-10 shadow-sm border border-border/30 max-w-3xl mx-auto relative z-10"
+              className="bg-white/80 backdrop-blur-sm rounded-xl p-8 md:p-10 shadow-lg border border-border/30 max-w-3xl mx-auto relative z-10"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
