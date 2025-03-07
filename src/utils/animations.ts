@@ -1,4 +1,3 @@
-
 import { Variants } from "framer-motion";
 
 // Fade up animation
@@ -39,6 +38,62 @@ export const staggerContainer: Variants = {
     transition: {
       staggerChildren: 0.15,
       delayChildren: 0.3
+    }
+  }
+};
+
+// Mouse tracking animation
+export const mouseTracker = (mouseX: number, mouseY: number, factor = 1) => ({
+  x: (mouseX - 0.5) * factor,
+  y: (mouseY - 0.5) * factor,
+  transition: {
+    type: "spring",
+    damping: 15,
+    stiffness: 150,
+    mass: 0.1
+  }
+});
+
+// Mouse parallax for container
+export const mouseParallaxContainer: Variants = {
+  hover: {
+    perspective: 1000
+  }
+};
+
+// Mouse parallax for children
+export const mouseParallaxChild = (depth: number = 10): Variants => ({
+  hover: ({ clientX, clientY, offsetWidth, offsetHeight }: any) => {
+    const x = (clientX - offsetWidth / 2) / depth;
+    const y = (clientY - offsetHeight / 2) / depth;
+    
+    return {
+      x,
+      y,
+      transition: {
+        type: "spring",
+        stiffness: 75,
+        mass: 0.5
+      }
+    };
+  }
+});
+
+// Magic cursor animation
+export const magicCursor = {
+  default: {
+    scale: 1,
+    borderColor: "rgba(99, 102, 241, 0.6)", // indigo-500 with opacity
+    backgroundColor: "rgba(0, 0, 0, 0)"
+  },
+  hover: {
+    scale: 1.5,
+    borderColor: "rgba(99, 102, 241, 0)",
+    backgroundColor: "rgba(99, 102, 241, 0.2)",
+    transition: {
+      scale: { duration: 0.3 },
+      borderColor: { duration: 0.3 },
+      backgroundColor: { duration: 0.3 }
     }
   }
 };

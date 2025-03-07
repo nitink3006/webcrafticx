@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
@@ -14,6 +14,7 @@ import ProjectModal from '../components/ProjectModal';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const { scrollYProgress } = useScroll({ 
     container: containerRef
   });
@@ -23,6 +24,19 @@ const Index = () => {
     damping: 30,
     restDelta: 0.001
   });
+
+  // Track mouse position
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY
+      });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
   
   // Lazy load ThreeJS
   useEffect(() => {
@@ -46,6 +60,35 @@ const Index = () => {
         style={{ scaleX }}
       />
       
+      {/* Custom cursor for desktop */}
+      <motion.div
+        className="fixed w-8 h-8 rounded-full border-2 border-indigo-500 pointer-events-none z-[200] hidden md:block mix-blend-difference"
+        animate={{
+          x: mousePosition.x - 16,
+          y: mousePosition.y - 16
+        }}
+        transition={{
+          type: "spring",
+          damping: 25,
+          stiffness: 150,
+          mass: 0.3
+        }}
+      />
+      
+      <motion.div
+        className="fixed w-2 h-2 rounded-full bg-indigo-600 pointer-events-none z-[201] hidden md:block mix-blend-difference"
+        animate={{
+          x: mousePosition.x - 1,
+          y: mousePosition.y - 1
+        }}
+        transition={{
+          type: "spring",
+          damping: 15,
+          stiffness: 200,
+          mass: 0.1
+        }}
+      />
+      
       <Navbar />
       
       <main>
@@ -61,7 +104,7 @@ const Index = () => {
       <Footer />
       <ProjectModal />
       
-      {/* Add back-to-top button */}
+      {/* Add back-to-top button with mouse hover effect */}
       <motion.a
         href="#home"
         className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-600/20"
@@ -70,7 +113,10 @@ const Index = () => {
           opacity: scrollYProgress.get() > 0.1 ? 1 : 0,
           y: scrollYProgress.get() > 0.1 ? 0 : 20
         }}
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ 
+          scale: 1.1,
+          boxShadow: "0 8px 30px rgba(79, 70, 229, 0.4)"
+        }}
         whileTap={{ scale: 0.9 }}
         transition={{ duration: 0.2 }}
       >
