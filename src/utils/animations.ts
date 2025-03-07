@@ -5,13 +5,13 @@ import { Variants } from "framer-motion";
 export const fadeUp: Variants = {
   hidden: { 
     opacity: 0, 
-    y: 20 
+    y: 30 
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1]
     }
   }
@@ -25,7 +25,7 @@ export const fadeIn: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1]
     }
   }
@@ -37,8 +37,8 @@ export const staggerContainer: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
+      staggerChildren: 0.15,
+      delayChildren: 0.3
     }
   }
 };
@@ -46,14 +46,14 @@ export const staggerContainer: Variants = {
 // Slide in from right
 export const slideRight: Variants = {
   hidden: { 
-    x: 40, 
+    x: 60, 
     opacity: 0 
   },
   visible: {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1]
     }
   }
@@ -62,14 +62,14 @@ export const slideRight: Variants = {
 // Slide in from left
 export const slideLeft: Variants = {
   hidden: { 
-    x: -40, 
+    x: -60, 
     opacity: 0 
   },
   visible: {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1]
     }
   }
@@ -85,7 +85,7 @@ export const scaleUp: Variants = {
     scale: 1,
     opacity: 1,
     transition: {
-      duration: 0.6,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1]
     }
   }
@@ -97,9 +97,9 @@ export const pulse: Variants = {
     scale: 1 
   },
   visible: {
-    scale: [1, 1.02, 1],
+    scale: [1, 1.03, 1],
     transition: {
-      duration: 2,
+      duration: 2.5,
       ease: "easeInOut",
       repeat: Infinity,
       repeatType: "reverse"
@@ -114,8 +114,8 @@ export const buttonHover: Variants = {
     boxShadow: "0 0 0 rgba(0, 0, 0, 0)"
   },
   hover: {
-    y: -2,
-    boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+    y: -3,
+    boxShadow: "0 15px 30px rgba(0, 0, 0, 0.15)",
     transition: {
       duration: 0.3,
       ease: "easeOut"
@@ -139,14 +139,14 @@ export const pageTransition: Variants = {
   animate: {
     opacity: 1,
     transition: {
-      duration: 0.5,
-      staggerChildren: 0.1
+      duration: 0.7,
+      staggerChildren: 0.15
     }
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.3
+      duration: 0.5
     }
   }
 };
@@ -155,21 +155,24 @@ export const pageTransition: Variants = {
 export const modalAnimation: Variants = {
   hidden: {
     opacity: 0,
-    scale: 0.95
+    scale: 0.95,
+    y: 10
   },
   visible: {
     opacity: 1,
     scale: 1,
+    y: 0,
     transition: {
-      duration: 0.3,
+      duration: 0.4,
       ease: [0.16, 1, 0.3, 1]
     }
   },
   exit: {
     opacity: 0,
     scale: 0.95,
+    y: 10,
     transition: {
-      duration: 0.2,
+      duration: 0.3,
       ease: [0.36, 0, 0.66, -0.56]
     }
   }
@@ -183,15 +186,164 @@ export const overlayAnimation: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.3,
+      duration: 0.4,
       ease: "easeOut"
     }
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.2,
+      duration: 0.3,
       ease: "easeIn"
+    }
+  }
+};
+
+// Hover card animation
+export const hoverCardAnimation: Variants = {
+  rest: {
+    y: 0,
+    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+    transition: {
+      duration: 0.3,
+      ease: "easeOut"
+    }
+  },
+  hover: {
+    y: -10,
+    boxShadow: "0 20px 30px rgba(0, 0, 0, 0.15)",
+    transition: {
+      duration: 0.4,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+// List item animation for staggering entries
+export const listItemAnimation: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 20 
+  },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: custom * 0.1,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }),
+  hover: {
+    y: -5,
+    transition: {
+      duration: 0.2,
+      ease: "easeOut"
+    }
+  }
+};
+
+// Reveal text animation for headings
+export const revealText: Variants = {
+  hidden: {
+    y: 100,
+    opacity: 0
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+// Animate individual letters
+export const letterAnimation: Variants = {
+  hidden: { 
+    opacity: 0, 
+    y: 50,
+    rotateX: 90
+  },
+  visible: (custom: number) => ({
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    transition: {
+      delay: custom * 0.04,
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  })
+};
+
+// Fancy button animations
+export const fancyButtonAnimation: Variants = {
+  rest: {
+    scale: 1,
+    boxShadow: "0 4px 20px rgba(79, 70, 229, 0.15)"
+  },
+  hover: {
+    scale: 1.05,
+    boxShadow: "0 15px 30px rgba(79, 70, 229, 0.25)",
+    transition: {
+      duration: 0.3,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  },
+  tap: {
+    scale: 0.98,
+    boxShadow: "0 0 0 rgba(79, 70, 229, 0)",
+    transition: {
+      duration: 0.15,
+      ease: "easeIn"
+    }
+  }
+};
+
+// Rotate animation
+export const rotateAnimation: Variants = {
+  hidden: {
+    rotate: -5,
+    opacity: 0
+  },
+  visible: {
+    rotate: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.7,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+// 3D tilt card animation
+export const tiltCardAnimation = {
+  rest: {
+    rotateX: 0,
+    rotateY: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  },
+  hover: {
+    rotateX: (e: MouseEvent) => {
+      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+      const centerY = rect.top + rect.height / 2;
+      const distFromCenter = (e.clientY - centerY) / (rect.height / 2);
+      return -distFromCenter * 10; // 10 degrees max rotation
+    },
+    rotateY: (e: MouseEvent) => {
+      const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const distFromCenter = (e.clientX - centerX) / (rect.width / 2);
+      return distFromCenter * 10; // 10 degrees max rotation
+    },
+    transition: {
+      duration: 0.3,
+      ease: [0.22, 1, 0.36, 1]
     }
   }
 };

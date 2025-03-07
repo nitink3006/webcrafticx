@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import ThreeScene from './ThreeScene';
+import { fadeIn, fadeUp, staggerContainer } from '../utils/animations';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -22,31 +23,32 @@ const Hero = () => {
       <ThreeScene />
       
       {/* Enhanced gradient overlay for better contrast while keeping white background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white/40 z-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/50 z-10 pointer-events-none" />
       
       <motion.div 
         className="container relative z-20 max-w-6xl mx-auto px-6 md:px-10"
         style={{ y, opacity, scale }}
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
       >
         <div className="text-center">
           <motion.div
             className="mb-6 inline-block"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            variants={fadeUp}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="inline-block px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-700 text-sm font-medium border border-indigo-100 shadow-sm mb-2">
+            <span className="inline-block px-4 py-1.5 rounded-full bg-indigo-50 text-indigo-700 text-sm font-medium border border-indigo-100 shadow-md mb-2">
               Digital Experience Agency
             </span>
           </motion.div>
           
           <motion.h1
-            className="text-slate-900 font-bold leading-tight mb-6 max-w-4xl mx-auto drop-shadow-sm"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            className="text-slate-900 font-bold leading-tight mb-6 max-w-4xl mx-auto drop-shadow-sm text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+            variants={fadeUp}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <span className="inline-block">Transform Ideas into</span>{" "}
+            <span className="block md:inline-block">Transform Ideas into</span>{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 inline-block drop-shadow">
               Digital Masterpieces
             </span>
@@ -54,8 +56,7 @@ const Hero = () => {
           
           <motion.p
             className="text-slate-700 text-lg md:text-xl max-w-2xl mx-auto mb-10 drop-shadow-sm"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            variants={fadeUp}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
             Our award-winning team combines creativity, technology, and strategy to deliver exceptional digital solutions for forward-thinking brands.
@@ -63,8 +64,7 @@ const Hero = () => {
           
           <motion.div
             className="flex flex-col sm:flex-row justify-center gap-4 items-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            variants={fadeUp}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
             <motion.button 
@@ -87,45 +87,77 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Floating elements to enhance visual appeal */}
-        <motion.div
-          className="absolute -left-10 top-1/4 w-16 h-16 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 opacity-30 z-10"
-          animate={{ 
-            y: [0, 15, 0],
-            rotate: 360,
-          }}
-          transition={{ 
-            y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-            rotate: { duration: 20, repeat: Infinity, ease: "linear" }
-          }}
-        />
+        {/* Enhanced floating elements */}
+        <AnimatePresence>
+          <motion.div
+            className="absolute -left-10 top-1/3 w-16 h-16 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 opacity-30 z-10 hidden md:block"
+            animate={{ 
+              y: [0, 15, 0],
+              rotate: 360,
+              scale: [1, 1.1, 1],
+            }}
+            transition={{ 
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
+              rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+              scale: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+            }}
+          />
+          
+          <motion.div
+            className="absolute right-10 bottom-1/3 w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 opacity-20 z-10 hidden md:block"
+            animate={{ 
+              y: [0, -20, 0],
+              rotate: -360,
+              scale: [1, 1.15, 1],
+            }}
+            transition={{ 
+              y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+              rotate: { duration: 25, repeat: Infinity, ease: "linear" },
+              scale: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }
+            }}
+          />
+          
+          <motion.div
+            className="absolute left-1/3 top-1/4 w-12 h-12 md:w-16 md:h-16 rounded-full bg-gradient-to-r from-green-300 to-teal-500 opacity-25 z-10 hidden md:block"
+            animate={{ 
+              y: [0, 12, 0],
+              x: [0, -12, 0],
+              rotate: 180,
+              scale: [1, 1.1, 1],
+            }}
+            transition={{ 
+              y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 },
+              x: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
+              rotate: { duration: 15, repeat: Infinity, ease: "linear" },
+              scale: { duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }
+            }}
+          />
+        </AnimatePresence>
         
-        <motion.div
-          className="absolute right-10 bottom-1/4 w-20 h-20 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 opacity-20 z-10"
-          animate={{ 
-            y: [0, -20, 0],
-            rotate: -360,
-          }}
-          transition={{ 
-            y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
-            rotate: { duration: 25, repeat: Infinity, ease: "linear" }
-          }}
-        />
-        
+        {/* Enhanced scroll indicator */}
         <motion.div 
           className="absolute left-1/2 bottom-8 transform -translate-x-1/2 z-30"
+          initial={{ opacity: 0, y: -10 }}
           animate={{ 
-            y: [0, 10, 0],
+            opacity: 1,
+            y: 0,
           }}
           transition={{ 
-            duration: 2, 
-            repeat: Infinity,
-            repeatType: "loop"
+            delay: 1.5,
+            duration: 0.8
           }}
         >
           <motion.a 
             href="#about"
             className="flex flex-col items-center text-indigo-600 hover:text-indigo-700 transition-colors"
+            animate={{ 
+              y: [0, 10, 0],
+            }}
+            transition={{ 
+              duration: 2, 
+              repeat: Infinity,
+              repeatType: "loop"
+            }}
           >
             <span className="text-sm mb-2 font-medium">Scroll to discover</span>
             <div className="w-8 h-8 rounded-full flex items-center justify-center border-2 border-indigo-500 shadow-md shadow-indigo-200">
@@ -152,7 +184,7 @@ const Hero = () => {
       
       {/* Enhanced circular elements with gradients */}
       <motion.div
-        className="absolute w-[600px] h-[600px] md:w-[800px] md:h-[800px] lg:w-[1000px] lg:h-[1000px] border-2 border-indigo-100 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-gradient-to-br from-indigo-50 to-transparent opacity-70"
+        className="absolute w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] md:w-[800px] md:h-[800px] lg:w-[1000px] lg:h-[1000px] border-2 border-indigo-100 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-gradient-to-br from-indigo-50 to-transparent opacity-70"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ 
           scale: 1, 
@@ -167,7 +199,7 @@ const Hero = () => {
       />
       
       <motion.div
-        className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] border-2 border-purple-100 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-gradient-to-tr from-purple-50 to-transparent opacity-80"
+        className="absolute w-[150px] h-[150px] sm:w-[300px] sm:h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] border-2 border-purple-100 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-gradient-to-tr from-purple-50 to-transparent opacity-80"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ 
           scale: 1, 
