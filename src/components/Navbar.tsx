@@ -17,18 +17,21 @@ const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   
+  // Enhanced background with more glass effect
   const navBackground = useTransform(
     scrollY,
     [0, 100],
-    ['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0.95)']
+    ['rgba(255, 255, 255, 0.7)', 'rgba(255, 255, 255, 0.95)']
   );
   
+  // Improved shadow for depth
   const navShadow = useTransform(
     scrollY,
     [0, 100],
-    ['0 0 0 rgba(0, 0, 0, 0)', '0 4px 20px rgba(0, 0, 0, 0.1)']
+    ['0 0 0 rgba(0, 0, 0, 0)', '0 8px 30px rgba(0, 0, 0, 0.1)']
   );
   
+  // Consistent text color
   const textColor = useTransform(
     scrollY,
     [0, 100],
@@ -53,21 +56,24 @@ const Navbar = () => {
       style={{ 
         backgroundColor: navBackground,
         boxShadow: navShadow,
-        backdropFilter: 'blur(10px)'
+        backdropFilter: 'blur(12px)'
       }}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <motion.a 
           href="#home"
-          className="font-bold text-2xl md:text-3xl z-10"
+          className="font-bold text-2xl md:text-3xl z-10 flex items-center"
           style={{ color: textColor }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Visionary
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-800">
+            Visionary
+          </span>
+          <span className="w-2 h-2 ml-1 rounded-full bg-indigo-600"></span>
         </motion.a>
         
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation with enhanced hover effects */}
         <nav className="hidden md:flex space-x-8">
           {navLinks.map((link) => (
             <motion.a
@@ -83,31 +89,31 @@ const Navbar = () => {
         </nav>
         
         <motion.button
-          className="button-primary hidden md:block bg-indigo-600 hover:bg-indigo-700"
-          whileHover={{ scale: 1.05 }}
+          className="button-primary hidden md:block bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-500/20"
+          whileHover={{ scale: 1.05, boxShadow: "0 15px 25px rgba(79, 70, 229, 0.3)" }}
           whileTap={{ scale: 0.95 }}
           onClick={() => document.getElementById('project-modal')?.click()}
         >
           Start a Project
         </motion.button>
         
-        {/* Mobile Navigation Toggle */}
+        {/* Mobile Navigation Toggle with improved design */}
         <motion.button
-          className="md:hidden z-10 p-2"
+          className="md:hidden z-10 p-2 bg-white/80 rounded-full backdrop-blur-sm shadow-md"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           whileTap={{ scale: 0.9 }}
         >
           {mobileMenuOpen ? (
-            <X size={24} style={{ color: 'white' }} />
+            <X size={24} className="text-indigo-600" />
           ) : (
-            <Menu size={24} style={{ color: mobileMenuOpen ? 'white' : textColor.get() }} />
+            <Menu size={24} className="text-indigo-600" />
           )}
         </motion.button>
       </div>
       
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation Menu with enhanced design */}
       <motion.div
-        className="fixed inset-0 z-40 bg-indigo-900/95"
+        className="fixed inset-0 z-40 bg-gradient-to-b from-indigo-900 to-purple-900"
         initial={{ opacity: 0, x: "100%" }}
         animate={{
           opacity: mobileMenuOpen ? 1 : 0,
@@ -136,7 +142,7 @@ const Navbar = () => {
             </motion.a>
           ))}
           <motion.button 
-            className="button-primary mt-4 bg-white text-indigo-700 hover:bg-gray-100"
+            className="mt-4 px-8 py-3 rounded-md text-indigo-700 font-medium transition-all duration-300 shadow-xl bg-white hover:bg-gray-100"
             initial={{ opacity: 0, y: 10 }}
             animate={{ 
               opacity: mobileMenuOpen ? 1 : 0, 

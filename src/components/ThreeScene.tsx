@@ -28,11 +28,22 @@ const Particles = ({ count = 2000, size = 0.02, color = "#5046e5", scale = 5 }: 
         positions[i3 + 1] = (Math.random() - 0.5) * scale;
         positions[i3 + 2] = (Math.random() - 0.5) * scale;
         
-        const colorValue = new THREE.Color(color);
-        colorValue.setHSL(Math.random() * 0.1 + 0.6, 0.8, 0.8); // Brighter colors
-        colors[i3] = colorValue.r;
-        colors[i3 + 1] = colorValue.g;
-        colors[i3 + 2] = colorValue.b;
+        // Enhanced color palette with brighter colors
+        const colorOption = Math.random();
+        if (colorOption < 0.4) {
+          // Indigo/purple family
+          color.setHSL(0.7, 0.9, 0.7 + Math.random() * 0.3);
+        } else if (colorOption < 0.7) {
+          // Blue family
+          color.setHSL(0.6, 0.8, 0.6 + Math.random() * 0.4);
+        } else {
+          // Purple/pink family
+          color.setHSL(0.8, 0.8, 0.7 + Math.random() * 0.3);
+        }
+        
+        colors[i3] = color.r;
+        colors[i3 + 1] = color.g;
+        colors[i3 + 2] = color.b;
       }
 
       const geometry = mesh.current.geometry as THREE.BufferGeometry;
@@ -75,9 +86,16 @@ const AnimatedSphere = () => {
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]} scale={2}>
+    <mesh ref={meshRef} position={[0, 0, 0]} scale={2.2}>
       <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial color="#4F46E5" metalness={0.7} roughness={0.2} wireframe />
+      <meshStandardMaterial 
+        color="#4F46E5" 
+        metalness={0.7} 
+        roughness={0.2} 
+        wireframe 
+        emissive="#8B5CF6"
+        emissiveIntensity={0.2}
+      />
     </mesh>
   );
 };
@@ -87,8 +105,9 @@ const ThreeScene = () => {
     <div className="absolute inset-0 w-full h-full z-0 bg-white">
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 10], fov: 25 }}>
         <ambientLight intensity={0.7} />
-        <directionalLight position={[10, 10, 5]} intensity={1.5} />
-        <Particles count={2000} size={0.02} scale={10} />
+        <directionalLight position={[10, 10, 5]} intensity={1.8} color="#8B5CF6" />
+        <directionalLight position={[-10, -10, -5]} intensity={0.5} color="#60A5FA" />
+        <Particles count={2500} size={0.025} scale={10} />
         <AnimatedSphere />
         <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
       </Canvas>

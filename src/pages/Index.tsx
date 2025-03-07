@@ -38,7 +38,7 @@ const Index = () => {
   return (
     <div className="relative">
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-indigo-600 z-[100] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 to-purple-600 z-[100] origin-left"
         style={{ scaleX }}
       />
       
