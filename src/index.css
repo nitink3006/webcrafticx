@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -103,16 +104,16 @@
   }
   
   .button-primary {
-    @apply px-6 py-3 rounded-md bg-primary text-white font-medium transition-all duration-300
-      hover:translate-y-[-2px] hover:shadow-lg hover:shadow-primary/20 active:translate-y-[0px];
+    @apply px-6 py-3 rounded-md bg-indigo-600 text-white font-medium transition-all duration-300
+      hover:translate-y-[-2px] hover:shadow-lg hover:shadow-indigo-500/20 active:translate-y-[0px];
   }
   
   .nav-link {
-    @apply relative py-2 transition-all duration-300 hover:text-primary;
+    @apply relative py-2 transition-all duration-300 hover:text-indigo-500;
   }
   
   .nav-link::after {
-    @apply content-[''] absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300;
+    @apply content-[''] absolute bottom-0 left-0 w-0 h-[2px] bg-indigo-500 transition-all duration-300;
   }
   
   .nav-link:hover::after {
@@ -126,7 +127,11 @@
   }
   
   .text-shadow {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .text-shadow-sm {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
   
   .mask-radial-gradient {

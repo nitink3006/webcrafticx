@@ -22,7 +22,8 @@ const Hero = () => {
     >
       <ThreeScene />
       
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background z-10 pointer-events-none" />
+      {/* Dark overlay for better contrast */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-background z-10 pointer-events-none" />
       
       <motion.div 
         className="container relative z-20 max-w-6xl mx-auto px-6 md:px-10"
@@ -30,7 +31,7 @@ const Hero = () => {
       >
         <div className="text-center">
           <motion.p
-            className="text-white/80 text-lg md:text-xl mb-4 font-light"
+            className="text-white text-lg md:text-xl mb-4 font-medium drop-shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
@@ -39,19 +40,19 @@ const Hero = () => {
           </motion.p>
           
           <motion.h1
-            className="text-white font-bold leading-tight mb-6 text-shadow max-w-4xl mx-auto"
+            className="text-white font-bold leading-tight mb-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] max-w-4xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
           >
             <span className="inline-block">Transform Ideas into</span>{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 inline-block">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-500 inline-block drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
               Digital Masterpieces
             </span>
           </motion.h1>
           
           <motion.p
-            className="text-white/70 text-lg md:text-xl max-w-2xl mx-auto mb-8"
+            className="text-white text-lg md:text-xl max-w-2xl mx-auto mb-8 drop-shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
@@ -66,7 +67,7 @@ const Hero = () => {
             transition={{ delay: 0.8, duration: 0.8 }}
           >
             <motion.button 
-              className="button-primary w-full sm:w-auto"
+              className="button-primary w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => document.getElementById('project-modal')?.click()}
@@ -76,7 +77,7 @@ const Hero = () => {
             
             <motion.a 
               href="#work"
-              className="px-6 py-3 text-white font-medium transition-all duration-300 border border-white/20 rounded-md hover:bg-white/10 backdrop-blur-sm w-full sm:w-auto text-center"
+              className="px-6 py-3 text-white font-medium transition-all duration-300 border border-white/30 rounded-md hover:bg-white/10 backdrop-blur-sm w-full sm:w-auto text-center shadow-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -98,15 +99,16 @@ const Hero = () => {
         >
           <motion.a 
             href="#services"
-            className="flex flex-col items-center text-white/70 hover:text-white transition-colors"
+            className="flex flex-col items-center text-white hover:text-white transition-colors drop-shadow-lg"
           >
-            <span className="text-sm mb-2">Scroll to discover</span>
+            <span className="text-sm mb-2 font-medium">Scroll to discover</span>
             <svg 
               width="24" 
               height="24" 
               viewBox="0 0 24 24" 
               fill="none" 
               xmlns="http://www.w3.org/2000/svg"
+              className="drop-shadow-md"
             >
               <path 
                 d="M12 5V19M12 19L18 13M12 19L6 13" 
@@ -120,9 +122,9 @@ const Hero = () => {
         </motion.div>
       </motion.div>
       
-      {/* Circular element */}
+      {/* Circular element with darker border */}
       <motion.div
-        className="absolute w-[600px] h-[600px] md:w-[800px] md:h-[800px] lg:w-[1000px] lg:h-[1000px] border border-white/10 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+        className="absolute w-[600px] h-[600px] md:w-[800px] md:h-[800px] lg:w-[1000px] lg:h-[1000px] border-2 border-white/20 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ 
           scale: 1, 
@@ -137,7 +139,7 @@ const Hero = () => {
       />
       
       <motion.div
-        className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] border border-white/20 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+        className="absolute w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[500px] lg:h-[500px] border-2 border-white/30 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ 
           scale: 1, 

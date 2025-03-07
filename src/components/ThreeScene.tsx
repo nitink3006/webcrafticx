@@ -29,7 +29,7 @@ const Particles = ({ count = 2000, size = 0.02, color = "#ffffff", scale = 5 }: 
         positions[i3 + 2] = (Math.random() - 0.5) * scale;
         
         const colorValue = new THREE.Color(color);
-        colorValue.setHSL(Math.random() * 0.1 + 0.05, 0.5, 0.5);
+        colorValue.setHSL(Math.random() * 0.1 + 0.6, 0.7, 0.7); // Brighter colors
         colors[i3] = colorValue.r;
         colors[i3 + 1] = colorValue.g;
         colors[i3 + 2] = colorValue.b;
@@ -56,7 +56,7 @@ const Particles = ({ count = 2000, size = 0.02, color = "#ffffff", scale = 5 }: 
         sizeAttenuation={true}
         vertexColors
         transparent
-        opacity={0.8}
+        opacity={0.9}
         blending={THREE.AdditiveBlending}
       />
     </points>
@@ -76,19 +76,19 @@ const AnimatedSphere = () => {
 
   return (
     <mesh ref={meshRef} position={[0, 0, 0]} scale={2}>
-      <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color="#ffffff" metalness={0.7} roughness={0.1} wireframe />
+      <sphereGeometry args={[1, 64, 64]} />
+      <meshStandardMaterial color="#4F46E5" metalness={0.7} roughness={0.2} wireframe />
     </mesh>
   );
 };
 
 const ThreeScene = () => {
   return (
-    <div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-b from-background to-background/10">
+    <div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-b from-slate-900 to-indigo-900/70">
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 10], fov: 25 }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <Particles count={2000} size={0.015} scale={10} />
+        <ambientLight intensity={0.7} />
+        <directionalLight position={[10, 10, 5]} intensity={1.5} />
+        <Particles count={2000} size={0.02} scale={10} />
         <AnimatedSphere />
         <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
       </Canvas>

@@ -19,19 +19,19 @@ const Navbar = () => {
   const navBackground = useTransform(
     scrollY,
     [0, 100],
-    ['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 0.9)']
+    ['rgba(0, 0, 0, 0.2)', 'rgba(255, 255, 255, 0.95)']
   );
   
   const navShadow = useTransform(
     scrollY,
     [0, 100],
-    ['0 0 0 rgba(0, 0, 0, 0)', '0 4px 20px rgba(0, 0, 0, 0.05)']
+    ['0 0 0 rgba(0, 0, 0, 0)', '0 4px 20px rgba(0, 0, 0, 0.1)']
   );
   
   const textColor = useTransform(
     scrollY,
     [0, 100],
-    ['rgb(255, 255, 255)', 'rgb(23, 23, 23)']
+    ['rgb(255, 255, 255)', 'rgb(30, 30, 30)']
   );
 
   // Close mobile menu when resizing to desktop
@@ -58,7 +58,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <motion.a 
           href="#home"
-          className="font-bold text-2xl md:text-3xl z-10"
+          className="font-bold text-2xl md:text-3xl z-10 drop-shadow-md"
           style={{ color: textColor }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -72,7 +72,7 @@ const Navbar = () => {
             <motion.a
               key={link.title}
               href={link.href}
-              className="nav-link"
+              className="nav-link font-medium drop-shadow-sm"
               style={{ color: textColor }}
               whileHover={{ y: -2 }}
               transition={{ duration: 0.2 }}
@@ -83,7 +83,7 @@ const Navbar = () => {
         </nav>
         
         <motion.button
-          className="button-primary hidden md:block"
+          className="button-primary hidden md:block bg-indigo-600 hover:bg-indigo-700"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => document.getElementById('project-modal')?.click()}
@@ -107,7 +107,7 @@ const Navbar = () => {
       
       {/* Mobile Navigation Menu */}
       <motion.div
-        className="fixed inset-0 z-40 bg-black"
+        className="fixed inset-0 z-40 bg-black/95"
         initial={{ opacity: 0, x: "100%" }}
         animate={{
           opacity: mobileMenuOpen ? 1 : 0,
@@ -120,7 +120,7 @@ const Navbar = () => {
             <motion.a
               key={link.title}
               href={link.href}
-              className="text-white text-2xl font-semibold"
+              className="text-white text-2xl font-semibold drop-shadow-lg"
               initial={{ opacity: 0, y: 10 }}
               animate={{ 
                 opacity: mobileMenuOpen ? 1 : 0, 
@@ -136,7 +136,7 @@ const Navbar = () => {
             </motion.a>
           ))}
           <motion.button 
-            className="button-primary mt-4"
+            className="button-primary mt-4 bg-indigo-600 hover:bg-indigo-700"
             initial={{ opacity: 0, y: 10 }}
             animate={{ 
               opacity: mobileMenuOpen ? 1 : 0, 
