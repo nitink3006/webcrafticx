@@ -3,7 +3,9 @@ import React, { useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import About from '../components/About';
 import Services from '../components/Services';
+import Work from '../components/Work';
 import Team from '../components/Team';
 import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
@@ -36,7 +38,7 @@ const Index = () => {
   return (
     <div className="relative">
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-primary z-[100] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-indigo-600 z-[100] origin-left"
         style={{ scaleX }}
       />
       
@@ -44,9 +46,11 @@ const Index = () => {
       
       <main>
         <Hero />
+        <About />
         <Services />
-        <Testimonials />
+        <Work />
         <Team />
+        <Testimonials />
         <Contact />
       </main>
       

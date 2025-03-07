@@ -42,7 +42,7 @@ const Services = () => {
   const isInView = useInView(ref, { once: false, amount: 0.2 });
   
   return (
-    <section id="services" className="section bg-slate-50 relative z-20">
+    <section id="services" className="section bg-white relative z-20">
       <motion.div 
         ref={ref}
         className="max-w-screen-xl mx-auto"
@@ -55,19 +55,19 @@ const Services = () => {
           variants={fadeUp}
         >
           <motion.p 
-            className="text-sm font-medium text-primary/80 uppercase tracking-wider mb-3"
+            className="text-sm font-medium text-indigo-600 uppercase tracking-wider mb-3"
             variants={fadeUp}
           >
             What We Do
           </motion.p>
           <motion.h2 
-            className="mb-6"
+            className="mb-6 text-slate-900"
             variants={fadeUp}
           >
             Our Services
           </motion.h2>
           <motion.p 
-            className="max-w-2xl mx-auto text-lg text-foreground/70"
+            className="max-w-2xl mx-auto text-lg text-slate-600"
             variants={fadeUp}
           >
             We offer a comprehensive range of digital services to help your business thrive in the modern landscape.
@@ -78,12 +78,12 @@ const Services = () => {
           {services.map((service, index) => (
             <motion.div 
               key={index}
-              className="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300"
+              className="bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-md border border-slate-200 hover:shadow-xl transition-all duration-300"
               variants={fadeUp}
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
             >
               <motion.div 
-                className="w-16 h-16 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5"
+                className="w-16 h-16 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5"
                 whileHover={{ 
                   rotate: [0, -10, 10, -10, 0],
                   transition: { duration: 0.5 }
@@ -91,8 +91,8 @@ const Services = () => {
               >
                 {service.icon}
               </motion.div>
-              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-              <p className="text-foreground/80">{service.description}</p>
+              <h3 className="text-xl font-bold mb-3 text-slate-900">{service.title}</h3>
+              <p className="text-slate-600">{service.description}</p>
             </motion.div>
           ))}
         </div>

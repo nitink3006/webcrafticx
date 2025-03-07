@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { title: 'Home', href: '#home' },
+  { title: 'About', href: '#about' },
   { title: 'Services', href: '#services' },
   { title: 'Work', href: '#work' },
   { title: 'Team', href: '#team' },
@@ -19,7 +20,7 @@ const Navbar = () => {
   const navBackground = useTransform(
     scrollY,
     [0, 100],
-    ['rgba(0, 0, 0, 0.2)', 'rgba(255, 255, 255, 0.95)']
+    ['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0.95)']
   );
   
   const navShadow = useTransform(
@@ -31,7 +32,7 @@ const Navbar = () => {
   const textColor = useTransform(
     scrollY,
     [0, 100],
-    ['rgb(255, 255, 255)', 'rgb(30, 30, 30)']
+    ['rgb(30, 41, 59)', 'rgb(30, 41, 59)']
   );
 
   // Close mobile menu when resizing to desktop
@@ -58,7 +59,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <motion.a 
           href="#home"
-          className="font-bold text-2xl md:text-3xl z-10 drop-shadow-md"
+          className="font-bold text-2xl md:text-3xl z-10"
           style={{ color: textColor }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -72,9 +73,8 @@ const Navbar = () => {
             <motion.a
               key={link.title}
               href={link.href}
-              className="nav-link font-medium drop-shadow-sm"
-              style={{ color: textColor }}
-              whileHover={{ y: -2 }}
+              className="nav-link font-medium text-slate-700"
+              whileHover={{ y: -2, color: "#4f46e5" }}
               transition={{ duration: 0.2 }}
             >
               {link.title}
@@ -107,7 +107,7 @@ const Navbar = () => {
       
       {/* Mobile Navigation Menu */}
       <motion.div
-        className="fixed inset-0 z-40 bg-black/95"
+        className="fixed inset-0 z-40 bg-indigo-900/95"
         initial={{ opacity: 0, x: "100%" }}
         animate={{
           opacity: mobileMenuOpen ? 1 : 0,
@@ -120,7 +120,7 @@ const Navbar = () => {
             <motion.a
               key={link.title}
               href={link.href}
-              className="text-white text-2xl font-semibold drop-shadow-lg"
+              className="text-white text-2xl font-semibold"
               initial={{ opacity: 0, y: 10 }}
               animate={{ 
                 opacity: mobileMenuOpen ? 1 : 0, 
@@ -136,7 +136,7 @@ const Navbar = () => {
             </motion.a>
           ))}
           <motion.button 
-            className="button-primary mt-4 bg-indigo-600 hover:bg-indigo-700"
+            className="button-primary mt-4 bg-white text-indigo-700 hover:bg-gray-100"
             initial={{ opacity: 0, y: 10 }}
             animate={{ 
               opacity: mobileMenuOpen ? 1 : 0, 

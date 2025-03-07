@@ -11,7 +11,7 @@ interface ParticleProps {
   scale?: number;
 }
 
-const Particles = ({ count = 2000, size = 0.02, color = "#ffffff", scale = 5 }: ParticleProps) => {
+const Particles = ({ count = 2000, size = 0.02, color = "#5046e5", scale = 5 }: ParticleProps) => {
   const mesh = useRef<THREE.Points>(null);
   const { viewport } = useThree();
 
@@ -29,7 +29,7 @@ const Particles = ({ count = 2000, size = 0.02, color = "#ffffff", scale = 5 }: 
         positions[i3 + 2] = (Math.random() - 0.5) * scale;
         
         const colorValue = new THREE.Color(color);
-        colorValue.setHSL(Math.random() * 0.1 + 0.6, 0.7, 0.7); // Brighter colors
+        colorValue.setHSL(Math.random() * 0.1 + 0.6, 0.8, 0.8); // Brighter colors
         colors[i3] = colorValue.r;
         colors[i3 + 1] = colorValue.g;
         colors[i3 + 2] = colorValue.b;
@@ -56,7 +56,7 @@ const Particles = ({ count = 2000, size = 0.02, color = "#ffffff", scale = 5 }: 
         sizeAttenuation={true}
         vertexColors
         transparent
-        opacity={0.9}
+        opacity={0.8}
         blending={THREE.AdditiveBlending}
       />
     </points>
@@ -84,7 +84,7 @@ const AnimatedSphere = () => {
 
 const ThreeScene = () => {
   return (
-    <div className="absolute inset-0 w-full h-full z-0 bg-gradient-to-b from-slate-900 to-indigo-900/70">
+    <div className="absolute inset-0 w-full h-full z-0 bg-white">
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 10], fov: 25 }}>
         <ambientLight intensity={0.7} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} />
