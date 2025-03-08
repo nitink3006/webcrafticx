@@ -59,12 +59,7 @@ export const smoothMouseTracker = (mouseX: number, mouseY: number, mouseDelta: {
     x: (baseX + deltaX) * speedFactor,
     y: (baseY + deltaY) * speedFactor,
     scale: 1 + (mouseSpeed * 0.0002), // Subtle scaling based on mouse speed
-    transition: {
-      type: "spring",
-      damping: 15 + (mouseSpeed * 0.05),
-      stiffness: 150,
-      mass: 0.1
-    }
+    rotate: mouseDelta.x * 0.02 * factor // Slight rotation based on horizontal movement
   };
 };
 
@@ -87,67 +82,54 @@ export const dynamicParallax = (mouseX: number, mouseY: number, mouseDelta: { x:
     y: moveY,
     rotateX,
     rotateY,
-    transition: {
-      type: "spring",
-      damping: 30,
-      stiffness: 50 + depth * 30
-    }
+    perspective: 1000
   };
 };
 
-// Mouse interaction for floating elements
+// Enhanced floating element animation with mouse reactivity
 export const floatingElementAnimation = (mouseX: number, mouseY: number, mouseDelta: { x: number, y: number }, mouseSpeed: number, index = 0) => {
   // Calculate normalized mouse position
   const normalizedX = mouseX / window.innerWidth;
   const normalizedY = mouseY / window.innerHeight;
   
-  // Base animation properties
+  // Calculate directional influence based on index for varied movement
+  const directionX = index % 2 === 0 ? 1 : -1;
+  const directionY = index % 3 === 0 ? 1 : -1;
+  
+  // Base animation properties with varied timings based on index
   const baseProps = {
-    y: [0, 10 + (index * 5), 0],
+    y: [0, 10 + (index * 5) * directionY, 0],
     rotate: index % 2 === 0 ? 360 : -360,
     scale: [1, 1.05 + (index * 0.02), 1],
   };
   
-  // Add mouse reactivity
+  // Mouse reactivity with varied intensity based on index
+  // Higher indices = more dramatic movement
   const reactiveProps = {
-    x: normalizedX * 50 * (index % 2 === 0 ? 1 : -1) + mouseDelta.x * (index + 1),
+    x: normalizedX * 50 * directionX + mouseDelta.x * (index + 1) * 0.8,
     filter: `blur(${mouseSpeed * 0.02 * (index + 1)}px)`
   };
   
   return {
     ...baseProps,
-    ...reactiveProps,
-    transition: {
-      y: { duration: 3 + index, repeat: Infinity, ease: "easeInOut" },
-      rotate: { duration: 20 - index * 2, repeat: Infinity, ease: "linear" },
-      scale: { duration: 6 + index, repeat: Infinity, ease: "easeInOut" },
-      filter: { duration: 0.2 },
-      x: { type: "spring", stiffness: 50, damping: 20 }
-    }
+    ...reactiveProps
   };
 };
 
-// Enhanced cursor spotlight that follows mouse
+// Enhanced cursor spotlight effect that follows mouse
 export const enhancedCursorSpotlight = (mouseX: number, mouseY: number, mouseSpeed: number) => {
   const size = 300 + mouseSpeed * 2; // Dynamic size based on speed
   const opacity = 0.15 - mouseSpeed * 0.0005; // Fade with higher speeds
   
   return {
-    background: `radial-gradient(circle ${size}px at ${mouseX}px ${mouseY}px, rgba(99, 102, 241, ${opacity}) 0%, rgba(255, 255, 255, 0) 70%)`,
-    transition: { duration: 0.2 }
+    background: `radial-gradient(circle ${size}px at ${mouseX}px ${mouseY}px, rgba(99, 102, 241, ${opacity}) 0%, rgba(255, 255, 255, 0) 70%)`
   };
 };
 
 // Enhanced mouse tracking animation
 export const mouseTracker = (mouseX: number, mouseY: number, factor = 1) => ({
   x: (mouseX - window.innerWidth / 2) / (window.innerWidth / 2) * factor,
-  y: (mouseY - window.innerHeight / 2) / (window.innerHeight / 2) * factor,
-  transition: {
-    type: "spring",
-    damping: 15,
-    stiffness: 150,
-    mass: 0.1
-  }
+  y: (mouseY - window.innerHeight / 2) / (window.innerHeight / 2) * factor
 });
 
 // Mouse parallax for container
@@ -165,12 +147,7 @@ export const mouseParallaxChild = (depth: number = 10): Variants => ({
     
     return {
       x,
-      y,
-      transition: {
-        type: "spring",
-        stiffness: 75,
-        mass: 0.5
-      }
+      y
     };
   }
 });
@@ -185,20 +162,12 @@ export const magicCursor = {
   hover: {
     scale: 1.5,
     borderColor: "rgba(99, 102, 241, 0)",
-    backgroundColor: "rgba(99, 102, 241, 0.2)",
-    transition: {
-      scale: { duration: 0.3 },
-      borderColor: { duration: 0.3 },
-      backgroundColor: { duration: 0.3 }
-    }
+    backgroundColor: "rgba(99, 102, 241, 0.2)"
   },
   active: {
     scale: 0.8,
     borderColor: "rgba(99, 102, 241, 0.8)",
-    backgroundColor: "rgba(99, 102, 241, 0.3)",
-    transition: {
-      duration: 0.1
-    }
+    backgroundColor: "rgba(99, 102, 241, 0.3)"
   }
 };
 
@@ -211,11 +180,7 @@ export const mouse3DRotation = (mouseX: number, mouseY: number, sensitivity = 10
   return {
     rotateX: -normalizedY * sensitivity,
     rotateY: normalizedX * sensitivity,
-    transition: {
-      type: "spring",
-      damping: 20,
-      stiffness: 100
-    }
+    perspective: 1000
   };
 };
 
@@ -226,23 +191,13 @@ export const mouseFollow = (mouseX: number, mouseY: number, delay = 0, intensity
   
   return {
     x: normalizedX * intensity,
-    y: normalizedY * intensity,
-    transition: {
-      type: "spring",
-      damping: 25,
-      stiffness: 100,
-      delay
-    }
+    y: normalizedY * intensity
   };
 };
 
 // Cursor spotlight effect (radial gradient following mouse)
 export const cursorSpotlight = (mouseX: number, mouseY: number) => ({
-  background: `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
-  transition: {
-    type: "tween",
-    duration: 0.2
-  }
+  background: `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`
 });
 
 // Slide in from right

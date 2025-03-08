@@ -2,7 +2,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import ThreeScene from './ThreeScene';
-import { fadeIn, fadeUp, staggerContainer } from '../utils/animations';
+import { fadeIn, fadeUp, staggerContainer, dynamicParallax, floatingElementAnimation } from '../utils/animations';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -12,38 +12,54 @@ const Hero = () => {
   
   // Enhanced mouse tracking for smoother animations
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     let prevMousePosition = { x: 0, y: 0 };
+    let lastMoveTime = Date.now();
     let mouseSpeedAccumulator = 0;
+    let rafId: number;
     
     const handleMouseMove = (e: MouseEvent) => {
-      // Calculate mouse delta (change in position)
-      const deltaX = e.clientX - prevMousePosition.x;
-      const deltaY = e.clientY - prevMousePosition.y;
+      const currentTime = Date.now();
+      const timeDelta = currentTime - lastMoveTime;
       
-      // Update mouse position
+      // Calculate deltas with smoothing
+      const deltaX = (e.clientX - prevMousePosition.x) * 0.5; // Apply smoothing factor
+      const deltaY = (e.clientY - prevMousePosition.y) * 0.5;
+      
+      // Update mouse position immediately for responsive feel
       setMousePosition({
         x: e.clientX,
         y: e.clientY
       });
       
-      // Update delta with some smoothing
-      setMouseDelta({
-        x: deltaX * 0.2, // Reduce the impact for smoother movement
-        y: deltaY * 0.2
-      });
+      // Calculate mouse speed with improved smoothing
+      const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+      const speed = timeDelta > 0 ? distance / timeDelta * 100 : 0;
       
-      // Calculate mouse speed for dynamic effects
-      const speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      mouseSpeedAccumulator = mouseSpeedAccumulator * 0.8 + speed * 0.2; // Smooth the speed
-      setMouseSpeed(mouseSpeedAccumulator);
+      // Use RAF for smoother updates to delta and speed
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        // Smooth out speed calculations with enhanced exponential smoothing
+        mouseSpeedAccumulator = mouseSpeedAccumulator * 0.9 + speed * 0.1;
+        
+        setMouseDelta({
+          x: deltaX,
+          y: deltaY
+        });
+        
+        setMouseSpeed(mouseSpeedAccumulator);
+      });
       
       // Save current position for next calculation
       prevMousePosition = { x: e.clientX, y: e.clientY };
+      lastMoveTime = currentTime;
     };
     
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(rafId);
     };
   }, []);
   
@@ -60,10 +76,10 @@ const Hero = () => {
   const calcMouseX = mousePosition.x / (typeof window !== 'undefined' ? window.innerWidth : 1);
   const calcMouseY = mousePosition.y / (typeof window !== 'undefined' ? window.innerHeight : 1);
   
-  const moveX = useTransform(() => (calcMouseX - 0.5) * (20 + mouseSpeed * 0.5));
-  const moveY = useTransform(() => (calcMouseY - 0.5) * (20 + mouseSpeed * 0.5));
-  const rotateX = useTransform(() => (calcMouseY - 0.5) * (10 + mouseDelta.y * 0.1));
-  const rotateY = useTransform(() => (0.5 - calcMouseX) * (10 + mouseDelta.x * 0.1));
+  const moveX = (calcMouseX - 0.5) * (20 + mouseSpeed * 0.5);
+  const moveY = (calcMouseY - 0.5) * (20 + mouseSpeed * 0.5);
+  const rotateX = (calcMouseY - 0.5) * (10 + mouseDelta.y * 0.1);
+  const rotateY = (0.5 - calcMouseX) * (10 + mouseDelta.x * 0.1);
 
   return (
     <section 
@@ -73,8 +89,13 @@ const Hero = () => {
     >
       <ThreeScene />
       
-      {/* Enhanced gradient overlay for better contrast while keeping white background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/50 z-10 pointer-events-none" />
+      {/* Enhanced gradient overlay with mouse reactivity */}
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/70 to-white/50 z-10 pointer-events-none"
+        style={{
+          backgroundPosition: `${50 + mouseDelta.x * 0.05}% ${50 + mouseDelta.y * 0.05}%`
+        }}
+      />
       
       <motion.div 
         className="container relative z-20 max-w-6xl mx-auto px-6 md:px-10"
@@ -84,7 +105,7 @@ const Hero = () => {
         animate="visible"
       >
         {/* Main content area with enhanced mouse responsiveness */}
-        <div className="text-center">
+        <div className="text-center relative">
           <motion.div
             className="mb-6 inline-block"
             variants={fadeUp}
@@ -111,17 +132,26 @@ const Hero = () => {
               duration: 0.8 
             }}
             style={{ 
-              x: moveX.get() * 0.5, 
-              y: moveY.get() * 0.5,
+              x: moveX * 0.5, 
+              y: moveY * 0.5,
               rotateX: mouseDelta.y * -0.02,
               rotateY: mouseDelta.x * 0.02,
               perspective: 1000
             }}
           >
             <span className="block md:inline-block">Transform Ideas into</span>{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 inline-block drop-shadow">
+            <motion.span 
+              className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800 inline-block drop-shadow"
+              animate={{
+                backgroundPosition: `${100 + mousePosition.x * 0.02}% ${mousePosition.y * 0.02}%`,
+                backgroundSize: `${200 + mouseSpeed * 0.5}%`
+              }}
+              transition={{
+                duration: 0.5
+              }}
+            >
               Digital Masterpieces
-            </span>
+            </motion.span>
           </motion.h1>
           
           <motion.p
@@ -132,8 +162,8 @@ const Hero = () => {
               duration: 0.8 
             }}
             style={{ 
-              x: moveX.get() * 0.3, 
-              y: moveY.get() * 0.3,
+              x: moveX * 0.3, 
+              y: moveY * 0.3,
               scale: 1 + mouseSpeed * 0.0005 // Subtle scale effect based on mouse speed
             }}
           >
@@ -149,8 +179,8 @@ const Hero = () => {
               duration: 0.8 
             }}
             style={{ 
-              x: moveX.get() * 0.1, 
-              y: moveY.get() * 0.1,
+              x: moveX * 0.1, 
+              y: moveY * 0.1,
               rotate: mouseDelta.x * 0.01 // Very subtle rotation
             }}
           >
@@ -182,7 +212,7 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Enhanced interactive floating elements that follow mouse more dynamically */}
+        {/* Enhanced interactive floating elements with more dynamic mouse following */}
         <AnimatePresence>
           <motion.div
             key="circle1"
@@ -191,13 +221,14 @@ const Hero = () => {
               y: [0, 15, 0],
               rotate: 360,
               scale: [1, 1.1, 1],
-              x: calcMouseX * -40 + mouseDelta.x * 2, // More responsive to mouse movement
+              x: calcMouseX * -60 + mouseDelta.x * 3.5, // More responsive to mouse movement
               filter: `blur(${mouseSpeed * 0.05}px)` // Dynamic blur based on mouse speed
             }}
             transition={{ 
               y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
               rotate: { duration: 20, repeat: Infinity, ease: "linear" },
               scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
+              x: { type: "spring", stiffness: 40, damping: 20 },
               filter: { duration: 0.2 }
             }}
           />
@@ -209,13 +240,14 @@ const Hero = () => {
               y: [0, -20, 0],
               rotate: -360,
               scale: [1, 1.15, 1],
-              x: calcMouseX * 40 + mouseDelta.x * -2.5, // More responsive to mouse movement
+              x: calcMouseX * 60 + mouseDelta.x * -4, // More responsive to mouse movement
               filter: `blur(${mouseSpeed * 0.03}px)` // Dynamic blur based on mouse speed
             }}
             transition={{ 
               y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
               rotate: { duration: 25, repeat: Infinity, ease: "linear" },
               scale: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 },
+              x: { type: "spring", stiffness: 30, damping: 15 },
               filter: { duration: 0.2 }
             }}
           />
@@ -225,33 +257,36 @@ const Hero = () => {
             className="absolute left-1/3 top-1/4 w-8 h-8 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-green-300 to-teal-500 opacity-25 z-10 hidden md:block"
             animate={{ 
               y: [0, 12, 0],
-              x: [0, -12, 0, calcMouseX * 30 + mouseDelta.x * 3], // More responsive to mouse movement
               rotate: 180,
               scale: [1, 1.1, 1],
+              x: calcMouseX * 45 + mouseDelta.x * 4.5, // More responsive to mouse movement
               filter: `blur(${mouseSpeed * 0.04}px)` // Dynamic blur based on mouse speed
             }}
             transition={{ 
               y: { duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 },
-              x: { duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
               rotate: { duration: 15, repeat: Infinity, ease: "linear" },
               scale: { duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 },
+              x: { type: "spring", stiffness: 35, damping: 18 },
               filter: { duration: 0.2 }
             }}
           />
         </AnimatePresence>
         
-        {/* Enhanced scroll indicator with better mouse interaction */}
+        {/* Enhanced scroll indicator with improved mouse interaction */}
         <motion.div 
           className="absolute left-1/2 bottom-8 transform -translate-x-1/2 z-30"
           initial={{ opacity: 0, y: -10 }}
           animate={{ 
             opacity: 1,
             y: 0,
-            x: mouseDelta.x * 0.5 // Subtle movement based on mouse delta
+            x: mouseDelta.x * 1.2, // More noticeable movement based on mouse delta
+            filter: `blur(${Math.abs(mouseDelta.x) * 0.01}px)` // Subtle blur effect on fast movement
           }}
           transition={{ 
             delay: 1.5,
-            duration: 0.8
+            duration: 0.8,
+            x: { type: "spring", stiffness: 50, damping: 10 },
+            filter: { duration: 0.1 }
           }}
         >
           <motion.a 
@@ -259,15 +294,46 @@ const Hero = () => {
             className="flex flex-col items-center text-indigo-600 hover:text-indigo-700 transition-colors"
             animate={{ 
               y: [0, 10, 0],
-              scale: 1 + (mouseSpeed * 0.0008) // Subtle scale effect based on mouse speed
+              scale: 1 + (mouseSpeed * 0.001) // Subtle scale effect based on mouse speed
             }}
             transition={{ 
               y: { duration: 2, repeat: Infinity, repeatType: "loop" },
               scale: { duration: 0.2 }
             }}
+            whileHover={{
+              y: -5,
+              scale: 1.1,
+              transition: { 
+                type: "spring", 
+                stiffness: 300, 
+                damping: 10 
+              }
+            }}
           >
             <span className="text-sm mb-2 font-medium">Scroll to discover</span>
-            <div className="w-8 h-8 rounded-full flex items-center justify-center border-2 border-indigo-500 shadow-md shadow-indigo-200">
+            <motion.div 
+              className="w-8 h-8 rounded-full flex items-center justify-center border-2 border-indigo-500 shadow-md shadow-indigo-200"
+              animate={{
+                boxShadow: [
+                  "0 4px 12px rgba(99, 102, 241, 0.2)",
+                  "0 8px 20px rgba(99, 102, 241, 0.4)",
+                  "0 4px 12px rgba(99, 102, 241, 0.2)"
+                ],
+                rotate: mouseDelta.x * 0.1
+              }}
+              transition={{
+                boxShadow: { 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                },
+                rotate: { 
+                  type: "spring", 
+                  stiffness: 100, 
+                  damping: 10 
+                }
+              }}
+            >
               <svg 
                 width="20" 
                 height="20" 
@@ -284,7 +350,7 @@ const Hero = () => {
                   strokeLinejoin="round"
                 />
               </svg>
-            </div>
+            </motion.div>
           </motion.a>
         </motion.div>
       </motion.div>
@@ -297,14 +363,16 @@ const Hero = () => {
           scale: 1, 
           opacity: 0.7,
           rotate: 360,
-          x: calcMouseX * 20 - 10 + mouseDelta.x * 0.8,
-          y: calcMouseY * 20 - 10 + mouseDelta.y * 0.8,
+          x: calcMouseX * 30 - 15 + mouseDelta.x * 1.2,
+          y: calcMouseY * 30 - 15 + mouseDelta.y * 1.2,
           filter: `blur(${mouseSpeed * 0.02}px)` // Dynamic blur based on mouse speed
         }}
         transition={{ 
           scale: { duration: 1.5, ease: [0.19, 1, 0.22, 1] },
           opacity: { duration: 1 },
           rotate: { duration: 120, repeat: Infinity, ease: "linear" },
+          x: { type: "spring", stiffness: 25, damping: 20 },
+          y: { type: "spring", stiffness: 25, damping: 20 },
           filter: { duration: 0.3 }
         }}
       />
@@ -316,36 +384,29 @@ const Hero = () => {
           scale: 1, 
           opacity: 0.8,
           rotate: -360,
-          x: calcMouseX * -25 + 12.5 + mouseDelta.x * -1.2,
-          y: calcMouseY * -25 + 12.5 + mouseDelta.y * -1.2,
+          x: calcMouseX * -35 + 17.5 + mouseDelta.x * -1.8,
+          y: calcMouseY * -35 + 17.5 + mouseDelta.y * -1.8,
           filter: `blur(${mouseSpeed * 0.015}px)` // Dynamic blur based on mouse speed
         }}
         transition={{ 
           scale: { duration: 1.5, ease: [0.19, 1, 0.22, 1], delay: 0.2 },
           opacity: { duration: 1, delay: 0.2 },
           rotate: { duration: 90, repeat: Infinity, ease: "linear" },
+          x: { type: "spring", stiffness: 20, damping: 25 },
+          y: { type: "spring", stiffness: 20, damping: 25 },
           filter: { duration: 0.3 }
         }}
       />
       
-      {/* Enhanced mouse tracker with dynamic size based on mouse speed */}
+      {/* Enhanced dynamic spotlight effect that follows mouse with speed-based intensity */}
       <motion.div
-        className="fixed w-6 h-6 rounded-full bg-indigo-600 opacity-30 pointer-events-none z-50 hidden md:block"
+        className="fixed pointer-events-none z-40 inset-0 opacity-30 mix-blend-soft-light hidden md:block"
         animate={{
-          x: mousePosition.x - 12,
-          y: mousePosition.y - 12,
-          scale: [1, 1.2, 1],
-          width: 24 + mouseSpeed * 0.15, // Dynamic size based on mouse speed
-          height: 24 + mouseSpeed * 0.15,
-          opacity: 0.3 - (mouseSpeed * 0.001) // Fade slightly with faster movement
+          background: `radial-gradient(circle ${300 + mouseSpeed * 3}px at ${mousePosition.x}px ${mousePosition.y}px, rgba(99, 102, 241, ${0.3 - mouseSpeed * 0.0008}) 0%, rgba(255, 255, 255, 0) 70%)`
         }}
         transition={{
-          x: { duration: 0.1, ease: "linear" },
-          y: { duration: 0.1, ease: "linear" },
-          scale: { duration: 1.5, repeat: Infinity, ease: "easeInOut" },
-          width: { duration: 0.2 },
-          height: { duration: 0.2 },
-          opacity: { duration: 0.2 }
+          type: "tween",
+          duration: 0.2
         }}
       />
     </section>

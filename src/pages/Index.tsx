@@ -11,7 +11,7 @@ import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import ProjectModal from '../components/ProjectModal';
-import { mouseTracker } from '../utils/animations';
+import { mouseTracker, enhancedCursorSpotlight } from '../utils/animations';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -177,12 +177,12 @@ const Index = () => {
             backgroundColor: `rgba(99, 102, 241, ${0.5 - index * 0.1})`,
             x: mousePosition.x,
             y: mousePosition.y,
-            filter: `blur(${index * 0.5}px)`,
-            transition: {
-              duration: 0.1 + index * 0.05,
-              ease: "linear",
-              delay: index * 0.03
-            }
+            filter: `blur(${index * 0.5}px)`
+          }}
+          transition={{
+            duration: 0.1 + index * 0.05,
+            ease: "linear",
+            delay: index * 0.03
           }}
         />
       ))}
@@ -244,8 +244,13 @@ const Index = () => {
           className="absolute inset-0 bg-gradient-radial from-indigo-500/10 to-transparent"
           style={{ 
             backgroundPosition: `${50 + (mouseDelta.x * 0.1)}% ${50 + (mouseDelta.y * 0.1)}%`,
-            backgroundSize: `${200 + mouseSpeed}%`,
-            opacity: 0.05 + (mouseSpeed * 0.0002)
+            backgroundSize: `${200 + mouseSpeed}%`
+          }}
+          animate={{ 
+            opacity: 0.05 + (mouseSpeed * 0.0002) 
+          }}
+          transition={{
+            duration: 0.2
           }}
         />
       </div>
