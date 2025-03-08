@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -219,14 +218,14 @@
     @apply fixed rounded-full pointer-events-none z-[1000] hidden md:block;
     transition: width 0.2s, height 0.2s, opacity 0.2s;
     will-change: transform, width, height, opacity, background-color;
-    backdrop-filter: invert(0.1);
     mix-blend-mode: difference;
   }
   
   .custom-cursor-outer {
-    @apply border-2 border-indigo-400;
-    width: 30px;
-    height: 30px;
+    @apply border-2 border-indigo-500;
+    width: 32px;
+    height: 32px;
+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.3));
   }
   
   .custom-cursor-inner {
@@ -282,7 +281,9 @@
   }
 
   .mouse-follower {
-    @apply fixed pointer-events-none z-50 rounded-full mix-blend-difference;
+    @apply fixed pointer-events-none z-50 rounded-full;
+    mix-blend-mode: difference;
+    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.2));
     transition: transform 0.1s ease;
   }
   
@@ -321,7 +322,7 @@
   /* New spotlight effect */
   .spotlight-effect {
     @apply fixed inset-0 pointer-events-none;
-    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.5s ease, background 0.3s ease;
     z-index: 5;
@@ -379,9 +380,9 @@ body {
   100% { filter: blur(0); opacity: 1; }
 }
 
-/* Enhanced mouse interaction animations */
+/* Enhanced cursor animations */
 @keyframes cursor-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
+  0%, 100% { transform: scale(1); opacity: 0.9; }
   50% { transform: scale(1.2); opacity: 1; }
 }
 
