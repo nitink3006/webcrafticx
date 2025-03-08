@@ -109,6 +109,10 @@ const About = () => {
               x: (mousePosition.x - window.innerWidth / 2) * 0.02,
               y: (mousePosition.y - window.innerHeight / 2) * 0.02
             }}
+            transition={{
+              stiffness: 150,
+              damping: 15
+            }}
           >
             <motion.div 
               className="w-full h-[500px] rounded-2xl overflow-hidden shadow-xl"
@@ -156,19 +160,19 @@ const About = () => {
               key={index}
               className="flex flex-col items-center text-center"
               variants={fadeUp}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
               style={{
                 x: (mousePosition.x - window.innerWidth / 2) * 0.01 * (index + 1),
-                y: (mousePosition.y - window.innerHeight / 2) * 0.01 * (index + 1),
-                transition: { stiffness: 150, damping: 15 }
+                y: (mousePosition.y - window.innerHeight / 2) * 0.01 * (index + 1)
               }}
             >
               <motion.div 
                 className="w-16 h-16 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4"
                 whileHover={{ 
                   rotate: [0, -10, 10, -10, 0],
-                  transition: { duration: 0.5 }
                 }}
+                transition={{ duration: 0.5 }}
               >
                 {stat.icon}
               </motion.div>
