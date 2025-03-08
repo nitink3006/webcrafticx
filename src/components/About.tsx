@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Award, Users, Globe, TrendingUp } from 'lucide-react';
 import { staggerContainer, fadeUp } from '../utils/animations';
@@ -30,6 +30,22 @@ const stats = [
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.2 });
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  // Track mouse position within the component
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY
+      });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
   
   return (
     <section id="about" className="section bg-slate-50 relative z-20">
@@ -89,6 +105,10 @@ const About = () => {
           <motion.div
             className="relative"
             variants={fadeUp}
+            style={{
+              x: (mousePosition.x - window.innerWidth / 2) * 0.02,
+              y: (mousePosition.y - window.innerHeight / 2) * 0.02
+            }}
           >
             <motion.div 
               className="w-full h-[500px] rounded-2xl overflow-hidden shadow-xl"
@@ -109,12 +129,20 @@ const About = () => {
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
+              style={{
+                x: (mousePosition.x - window.innerWidth / 2) * -0.03,
+                y: (mousePosition.y - window.innerHeight / 2) * -0.03
+              }}
             />
             <motion.div 
               className="absolute -bottom-6 -right-6 w-32 h-32 rounded-2xl bg-indigo-200/30 -z-10"
               initial={{ opacity: 0 }}
               animate={isInView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
+              style={{
+                x: (mousePosition.x - window.innerWidth / 2) * 0.04,
+                y: (mousePosition.y - window.innerHeight / 2) * 0.04
+              }}
             />
           </motion.div>
         </div>
@@ -129,6 +157,11 @@ const About = () => {
               className="flex flex-col items-center text-center"
               variants={fadeUp}
               whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              style={{
+                x: (mousePosition.x - window.innerWidth / 2) * 0.01 * (index + 1),
+                y: (mousePosition.y - window.innerHeight / 2) * 0.01 * (index + 1),
+                transition: { type: "spring", stiffness: 150, damping: 15 }
+              }}
             >
               <motion.div 
                 className="w-16 h-16 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4"

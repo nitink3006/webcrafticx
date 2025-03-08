@@ -59,7 +59,7 @@ const Index = () => {
     };
   }, []);
   
-  // Cursor variants
+  // Cursor variants - Fix the type issues
   const cursorVariants = {
     default: {
       width: '24px',
@@ -78,7 +78,8 @@ const Index = () => {
       height: '40px',
       backgroundColor: 'rgba(99, 102, 241, 0.1)',
       border: '2px solid rgba(99, 102, 241, 0.5)',
-      mixBlendMode: 'difference',
+      // Use the proper blend mode from the enum rather than a string
+      mixBlendMode: "difference" as const,
       transition: {
         type: 'spring',
         damping: 15,
@@ -157,13 +158,13 @@ const Index = () => {
       <Navbar />
       
       <main className="mouse-animation-container">
-        <Hero parentMousePosition={mousePosition} />
-        <About parentMousePosition={mousePosition} />
-        <Services parentMousePosition={mousePosition} />
-        <Work parentMousePosition={mousePosition} />
-        <Team parentMousePosition={mousePosition} />
-        <Testimonials parentMousePosition={mousePosition} />
-        <Contact parentMousePosition={mousePosition} />
+        <Hero />
+        <About />
+        <Services />
+        <Work />
+        <Team />
+        <Testimonials />
+        <Contact />
       </main>
       
       <Footer />

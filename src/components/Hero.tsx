@@ -3,12 +3,24 @@ import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import ThreeScene from './ThreeScene';
 import { fadeIn, fadeUp, staggerContainer } from '../utils/animations';
 
-interface HeroProps {
-  parentMousePosition: { x: number; y: number };
-}
-
-const Hero = ({ parentMousePosition }: HeroProps) => {
+const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  // Track mouse position within the hero section
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY
+      });
+    };
+    
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -20,8 +32,8 @@ const Hero = ({ parentMousePosition }: HeroProps) => {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
   
   // Calculate mouse-based transformations
-  const calcMouseX = parentMousePosition.x / (typeof window !== 'undefined' ? window.innerWidth : 1);
-  const calcMouseY = parentMousePosition.y / (typeof window !== 'undefined' ? window.innerHeight : 1);
+  const calcMouseX = mousePosition.x / (typeof window !== 'undefined' ? window.innerWidth : 1);
+  const calcMouseY = mousePosition.y / (typeof window !== 'undefined' ? window.innerHeight : 1);
   
   const moveX = useTransform(() => (calcMouseX - 0.5) * 20);
   const moveY = useTransform(() => (calcMouseY - 0.5) * 20);
@@ -110,6 +122,7 @@ const Hero = ({ parentMousePosition }: HeroProps) => {
         <AnimatePresence>
           {/* Make circles smaller as requested */}
           <motion.div
+            key="circle1"
             className="absolute -left-10 top-1/3 w-8 h-8 md:w-16 md:h-16 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 opacity-30 z-10 hidden md:block"
             animate={{ 
               y: [0, 15, 0],
@@ -125,6 +138,7 @@ const Hero = ({ parentMousePosition }: HeroProps) => {
           />
           
           <motion.div
+            key="circle2"
             className="absolute right-10 bottom-1/3 w-12 h-12 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 opacity-20 z-10 hidden md:block"
             animate={{ 
               y: [0, -20, 0],
@@ -140,6 +154,7 @@ const Hero = ({ parentMousePosition }: HeroProps) => {
           />
           
           <motion.div
+            key="circle3"
             className="absolute left-1/3 top-1/4 w-8 h-8 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-green-300 to-teal-500 opacity-25 z-10 hidden md:block"
             animate={{ 
               y: [0, 12, 0],
@@ -243,8 +258,8 @@ const Hero = ({ parentMousePosition }: HeroProps) => {
       <motion.div
         className="fixed w-6 h-6 rounded-full bg-indigo-600 opacity-30 pointer-events-none z-50 hidden md:block"
         animate={{
-          x: parentMousePosition.x - 12,
-          y: parentMousePosition.y - 12,
+          x: mousePosition.x - 12,
+          y: mousePosition.y - 12,
           scale: [1, 1.2, 1],
         }}
         transition={{
