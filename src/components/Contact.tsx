@@ -1,5 +1,5 @@
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { MapPin, Phone, Mail, Send, Clock } from 'lucide-react';
 import { fadeUp, staggerContainer } from '../utils/animations';
@@ -32,22 +32,6 @@ const Contact = () => {
   const formRef = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.2 });
   const isFormInView = useInView(formRef, { once: false, amount: 0.2 });
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
-  // Track mouse position within the component
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
   
   return (
     <section id="contact" className="section bg-white relative z-20">
@@ -83,17 +67,7 @@ const Contact = () => {
         </motion.div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <motion.div 
-            variants={fadeUp}
-            style={{
-              x: (mousePosition.x - window.innerWidth / 2) * 0.02,
-              y: (mousePosition.y - window.innerHeight / 2) * 0.02
-            }}
-            transition={{
-              stiffness: 150,
-              damping: 25
-            }}
-          >
+          <motion.div variants={fadeUp}>
             <div className="bg-secondary/30 rounded-xl p-8 h-full">
               <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
               <div className="space-y-6">
@@ -102,14 +76,6 @@ const Contact = () => {
                     key={index} 
                     className="flex items-start gap-4"
                     variants={fadeUp}
-                    style={{
-                      x: (mousePosition.x - window.innerWidth / 2) * 0.01 * (index + 1),
-                      y: (mousePosition.y - window.innerHeight / 2) * 0.01 * (index + 1)
-                    }}
-                    transition={{
-                      stiffness: 150,
-                      damping: 20
-                    }}
                   >
                     <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-primary shadow-sm">
                       {item.icon}
@@ -132,14 +98,6 @@ const Contact = () => {
                       className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors"
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      style={{
-                        x: (mousePosition.x - window.innerWidth / 2) * 0.015 * (index + 1),
-                        y: (mousePosition.y - window.innerHeight / 2) * 0.015 * (index + 1)
-                      }}
-                      transition={{
-                        stiffness: 180,
-                        damping: 20
-                      }}
                     >
                       <span className="capitalize">{social.charAt(0)}</span>
                     </motion.a>
@@ -160,14 +118,6 @@ const Contact = () => {
                 opacity: 1,
                 transition: { staggerChildren: 0.1, delayChildren: 0.2 }
               }
-            }}
-            style={{
-              x: (mousePosition.x - window.innerWidth / 2) * -0.02,
-              y: (mousePosition.y - window.innerHeight / 2) * -0.02
-            }}
-            transition={{
-              stiffness: 150,
-              damping: 25
             }}
           >
             <motion.div 

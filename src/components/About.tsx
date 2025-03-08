@@ -1,5 +1,5 @@
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Award, Users, Globe, TrendingUp } from 'lucide-react';
 import { staggerContainer, fadeUp } from '../utils/animations';
@@ -30,50 +30,6 @@ const stats = [
 const About = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.2 });
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [mouseDelta, setMouseDelta] = useState({ x: 0, y: 0 });
-  const [mouseSpeed, setMouseSpeed] = useState(0);
-  
-  // Enhanced mouse position tracking with delta and speed
-  useEffect(() => {
-    let prevMousePosition = { x: 0, y: 0 };
-    let mouseSpeedAccumulator = 0;
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      // Calculate deltas
-      const deltaX = e.clientX - prevMousePosition.x;
-      const deltaY = e.clientY - prevMousePosition.y;
-      
-      // Update mouse position
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
-      
-      // Update delta with smoothing
-      setMouseDelta({
-        x: deltaX * 0.2,
-        y: deltaY * 0.2
-      });
-      
-      // Calculate mouse speed
-      const speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-      mouseSpeedAccumulator = mouseSpeedAccumulator * 0.8 + speed * 0.2;
-      setMouseSpeed(mouseSpeedAccumulator);
-      
-      // Save position for next calculation
-      prevMousePosition = { x: e.clientX, y: e.clientY };
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-  
-  // Calculate normalized mouse positions
-  const calcMouseX = mousePosition.x / (window.innerWidth || 1);
-  const calcMouseY = mousePosition.y / (window.innerHeight || 1);
   
   return (
     <section id="about" className="section bg-slate-50 relative z-20">
@@ -91,47 +47,18 @@ const About = () => {
             <motion.p 
               className="text-sm font-medium text-indigo-600 uppercase tracking-wider mb-3"
               variants={fadeUp}
-              style={{
-                x: mouseDelta.x * 0.5,
-                y: mouseDelta.y * 0.5
-              }}
-              transition={{
-                x: { duration: 0.2 },
-                y: { duration: 0.2 }
-              }}
             >
               About Us
             </motion.p>
             <motion.h2 
               className="mb-6 text-slate-900"
               variants={fadeUp}
-              style={{
-                x: mouseDelta.x * 0.3,
-                y: mouseDelta.y * 0.3,
-                rotateX: mouseDelta.y * -0.02,
-                rotateY: mouseDelta.x * 0.02,
-                perspective: 1000
-              }}
-              transition={{
-                x: { duration: 0.3 },
-                y: { duration: 0.3 },
-                rotateX: { duration: 0.3 },
-                rotateY: { duration: 0.3 }
-              }}
             >
               Your Vision, Our Expertise
             </motion.h2>
             <motion.div 
               className="space-y-4 text-slate-600"
               variants={fadeUp}
-              style={{
-                x: mouseDelta.x * 0.1,
-                y: mouseDelta.y * 0.1
-              }}
-              transition={{
-                x: { duration: 0.4 },
-                y: { duration: 0.4 }
-              }}
             >
               <p>
                 Founded in 2013, Visionary is a full-service digital agency dedicated to helping brands thrive in an increasingly complex landscape. We blend creativity, technology, and strategy to create meaningful digital experiences that drive results.
@@ -147,22 +74,11 @@ const About = () => {
             <motion.div 
               className="mt-8"
               variants={fadeUp}
-              style={{
-                x: mouseDelta.x * 0.15,
-                y: mouseDelta.y * 0.15
-              }}
-              transition={{
-                x: { duration: 0.2 },
-                y: { duration: 0.2 }
-              }}
             >
               <motion.a 
                 href="#team"
                 className="button-primary bg-indigo-600 hover:bg-indigo-700 inline-block"
-                whileHover={{ 
-                  scale: 1.05,
-                  y: -5 + mouseDelta.y * 0.1 // Dynamic hover based on mouse movement
-                }}
+                whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Meet Our Team
@@ -173,33 +89,12 @@ const About = () => {
           <motion.div
             className="relative"
             variants={fadeUp}
-            style={{
-              x: (mousePosition.x - window.innerWidth / 2) * 0.02 + mouseDelta.x * 0.3,
-              y: (mousePosition.y - window.innerHeight / 2) * 0.02 + mouseDelta.y * 0.3,
-              rotateX: mouseDelta.y * -0.05,
-              rotateY: mouseDelta.x * 0.05,
-              perspective: 1000
-            }}
-            transition={{
-              x: { duration: 0.3, ease: "easeOut" },
-              y: { duration: 0.3, ease: "easeOut" },
-              rotateX: { duration: 0.5, ease: "easeOut" },
-              rotateY: { duration: 0.5, ease: "easeOut" }
-            }}
           >
             <motion.div 
               className="w-full h-[500px] rounded-2xl overflow-hidden shadow-xl"
               initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { 
-                opacity: 1, 
-                y: 0,
-                scale: 1 + mouseSpeed * 0.0002 // Subtle scaling based on mouse speed
-              } : { opacity: 0, y: 20 }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 0.3,
-                scale: { duration: 0.2 }
-              }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
             >
               <img 
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80" 
@@ -208,40 +103,18 @@ const About = () => {
               />
             </motion.div>
             
-            {/* Decorative elements with enhanced mouse reactivity */}
+            {/* Decorative elements */}
             <motion.div 
               className="absolute -top-6 -left-6 w-32 h-32 rounded-2xl bg-indigo-200/30 -z-10"
               initial={{ opacity: 0 }}
-              animate={isInView ? { 
-                opacity: 1,
-                filter: `blur(${mouseSpeed * 0.03}px)` // Dynamic blur based on mouse speed
-              } : { opacity: 0 }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 0.4,
-                filter: { duration: 0.2 }
-              }}
-              style={{
-                x: (mousePosition.x - window.innerWidth / 2) * -0.03 + mouseDelta.x * -0.5,
-                y: (mousePosition.y - window.innerHeight / 2) * -0.03 + mouseDelta.y * -0.5
-              }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
             />
             <motion.div 
               className="absolute -bottom-6 -right-6 w-32 h-32 rounded-2xl bg-indigo-200/30 -z-10"
               initial={{ opacity: 0 }}
-              animate={isInView ? { 
-                opacity: 1,
-                filter: `blur(${mouseSpeed * 0.03}px)` // Dynamic blur based on mouse speed
-              } : { opacity: 0 }}
-              transition={{ 
-                duration: 0.8, 
-                delay: 0.5,
-                filter: { duration: 0.2 }
-              }}
-              style={{
-                x: (mousePosition.x - window.innerWidth / 2) * 0.04 + mouseDelta.x * 0.5,
-                y: (mousePosition.y - window.innerHeight / 2) * 0.04 + mouseDelta.y * 0.5
-              }}
+              animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
             />
           </motion.div>
         </div>
@@ -255,33 +128,13 @@ const About = () => {
               key={index}
               className="flex flex-col items-center text-center"
               variants={fadeUp}
-              whileHover={{ 
-                y: -5,
-                scale: 1.03,
-                transition: { duration: 0.2 }
-              }}
-              style={{
-                x: (mousePosition.x - window.innerWidth / 2) * 0.01 * (index + 1) + mouseDelta.x * 0.05 * (index + 1),
-                y: (mousePosition.y - window.innerHeight / 2) * 0.01 * (index + 1) + mouseDelta.y * 0.05 * (index + 1),
-                rotate: mouseDelta.x * 0.01 * (index + 1)
-              }}
-              transition={{
-                x: { duration: 0.3 },
-                y: { duration: 0.3 },
-                rotate: { duration: 0.3 }
-              }}
+              whileHover={{ y: -5, transition: { duration: 0.2 } }}
             >
               <motion.div 
                 className="w-16 h-16 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-4"
                 whileHover={{ 
                   rotate: [0, -10, 10, -10, 0],
-                  scale: 1.1,
-                  boxShadow: "0 10px 25px rgba(79, 70, 229, 0.15)"
-                }}
-                transition={{ 
-                  rotate: { duration: 0.5 },
-                  scale: { duration: 0.2 },
-                  boxShadow: { duration: 0.2 }
+                  transition: { duration: 0.5 }
                 }}
               >
                 {stat.icon}

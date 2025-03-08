@@ -77,7 +77,6 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
-    overflow-x: hidden; /* Prevent horizontal scrolling */
   }
 
   @media (max-width: 768px) {
@@ -156,83 +155,6 @@
   .gradient-border-content {
     @apply relative bg-white rounded-[calc(0.5rem-1px)] p-6 h-full;
   }
-  
-  /* Enhanced mouse animation styles */
-  .mouse-animation-container {
-    position: relative;
-    overflow: hidden;
-    transform-style: preserve-3d;
-    perspective: 1000px;
-  }
-  
-  .mouse-animation-element {
-    @apply transition-transform duration-200;
-    transform-style: preserve-3d;
-    will-change: transform;
-  }
-  
-  .mouse-parallax {
-    @apply transition-all duration-300 ease-out;
-    transform-style: preserve-3d;
-    will-change: transform;
-  }
-  
-  .mouse-parallax-slow {
-    transition-duration: 500ms;
-  }
-  
-  .mouse-parallax-fast {
-    transition-duration: 100ms;
-  }
-  
-  /* New speed-based animation classes */
-  .speed-scale {
-    transition: transform 0.2s ease-out;
-    will-change: transform;
-  }
-  
-  .speed-rotate {
-    transition: transform 0.3s ease-out;
-    will-change: transform, opacity;
-  }
-  
-  .speed-blur {
-    transition: filter 0.2s ease-out;
-    will-change: filter;
-  }
-  
-  /* Smoother motion transitions */
-  .smooth-motion {
-    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  
-  /* Magnetic mouse effect */
-  .magnetic-item {
-    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
-    transform-style: preserve-3d;
-    will-change: transform;
-  }
-  
-  /* Improved custom cursor styles */
-  .custom-cursor {
-    @apply fixed rounded-full pointer-events-none z-[1000] hidden md:block;
-    transition: width 0.2s, height 0.2s, opacity 0.2s;
-    will-change: transform, width, height, opacity, background-color;
-    mix-blend-mode: difference;
-  }
-  
-  .custom-cursor-outer {
-    @apply border-2 border-indigo-500;
-    width: 32px;
-    height: 32px;
-    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.3));
-  }
-  
-  .custom-cursor-inner {
-    @apply bg-indigo-500;
-    width: 8px;
-    height: 8px;
-  }
 }
 
 @layer utilities {
@@ -281,9 +203,7 @@
   }
 
   .mouse-follower {
-    @apply fixed pointer-events-none z-50 rounded-full;
-    mix-blend-mode: difference;
-    filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.2));
+    @apply fixed pointer-events-none z-50 rounded-full mix-blend-difference;
     transition: transform 0.1s ease;
   }
   
@@ -293,52 +213,6 @@
   
   .mouse-follower-inner {
     @apply w-2 h-2 bg-indigo-600;
-  }
-  
-  /* Enhanced mouse parallax utilities */
-  .parallax-wrap {
-    transform-style: preserve-3d;
-    perspective: 1000px;
-  }
-  
-  .parallax-item {
-    transform-style: preserve-3d;
-    transition: transform 0.1s ease-out;
-    will-change: transform;
-  }
-  
-  .parallax-deep {
-    transform: translateZ(-100px);
-  }
-  
-  .parallax-medium {
-    transform: translateZ(-50px);
-  }
-  
-  .parallax-shallow {
-    transform: translateZ(-25px);
-  }
-  
-  /* New spotlight effect */
-  .spotlight-effect {
-    @apply fixed inset-0 pointer-events-none;
-    background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.5s ease, background 0.3s ease;
-    z-index: 5;
-  }
-  
-  .spotlight-effect.active {
-    opacity: 1;
-  }
-  
-  /* Speed-sensitive blur effect */
-  .speed-blur-effect {
-    transition: filter 0.2s ease-out;
-  }
-  
-  .speed-transform-effect {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 }
 
@@ -378,61 +252,4 @@ body {
 @keyframes blur-in {
   0% { filter: blur(5px); opacity: 0; }
   100% { filter: blur(0); opacity: 1; }
-}
-
-/* Enhanced cursor animations */
-@keyframes cursor-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.9; }
-  50% { transform: scale(1.2); opacity: 1; }
-}
-
-@keyframes cursor-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes cursor-wave {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  25% { transform: translateY(-3px) rotate(-5deg); }
-  75% { transform: translateY(3px) rotate(5deg); }
-}
-
-/* New dynamic spotlight effect animation */
-@keyframes spotlight-drift {
-  0%, 100% { background-position: 0% 0%; }
-  25% { background-position: 100% 0%; }
-  50% { background-position: 100% 100%; }
-  75% { background-position: 0% 100%; }
-}
-
-/* Magnetic pull effect */
-@keyframes magnetic-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* Background shimmer animation */
-@keyframes bg-shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-/* Dust particles floating animation */
-@keyframes dust-float {
-  0%, 100% { 
-    transform: translateY(0) translateX(0) rotate(0deg); 
-    opacity: 0.4;
-  }
-  25% { 
-    transform: translateY(-20px) translateX(10px) rotate(5deg); 
-    opacity: 0.7;
-  }
-  50% { 
-    transform: translateY(-30px) translateX(20px) rotate(10deg); 
-    opacity: 0.5;
-  }
-  75% { 
-    transform: translateY(-20px) translateX(5px) rotate(5deg); 
-    opacity: 0.7;
-  }
 }
