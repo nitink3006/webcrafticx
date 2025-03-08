@@ -88,7 +88,7 @@ const Contact = () => {
             style={{
               x: (mousePosition.x - window.innerWidth / 2) * 0.02,
               y: (mousePosition.y - window.innerHeight / 2) * 0.02,
-              transition: { type: "spring", stiffness: 150, damping: 25 }
+              transition: { stiffness: 150, damping: 25 }
             }}
           >
             <div className="bg-secondary/30 rounded-xl p-8 h-full">
@@ -102,7 +102,7 @@ const Contact = () => {
                     style={{
                       x: (mousePosition.x - window.innerWidth / 2) * 0.01 * (index + 1),
                       y: (mousePosition.y - window.innerHeight / 2) * 0.01 * (index + 1),
-                      transition: { type: "spring", stiffness: 150, damping: 20 }
+                      transition: { stiffness: 150, damping: 20 }
                     }}
                   >
                     <div className="w-12 h-12 rounded-lg bg-white flex items-center justify-center text-primary shadow-sm">
@@ -129,7 +129,7 @@ const Contact = () => {
                       style={{
                         x: (mousePosition.x - window.innerWidth / 2) * 0.015 * (index + 1),
                         y: (mousePosition.y - window.innerHeight / 2) * 0.015 * (index + 1),
-                        transition: { type: "spring", stiffness: 180, damping: 20 }
+                        transition: { stiffness: 180, damping: 20 }
                       }}
                     >
                       <span className="capitalize">{social.charAt(0)}</span>
@@ -155,7 +155,7 @@ const Contact = () => {
             style={{
               x: (mousePosition.x - window.innerWidth / 2) * -0.02,
               y: (mousePosition.y - window.innerHeight / 2) * -0.02,
-              transition: { type: "spring", stiffness: 150, damping: 25 }
+              transition: { stiffness: 150, damping: 25 }
             }}
           >
             <motion.div 

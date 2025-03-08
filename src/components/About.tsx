@@ -160,7 +160,7 @@ const About = () => {
               style={{
                 x: (mousePosition.x - window.innerWidth / 2) * 0.01 * (index + 1),
                 y: (mousePosition.y - window.innerHeight / 2) * 0.01 * (index + 1),
-                transition: { type: "spring", stiffness: 150, damping: 15 }
+                transition: { stiffness: 150, damping: 15 }
               }}
             >
               <motion.div 
