@@ -63,6 +63,7 @@ const CustomCursor = () => {
   }, []);
 
   // Improved cursor variants with better shapes and animations
+  // Fix: Use a specific CSS mix-blend-mode value instead of a generic string
   const cursorVariants = {
     default: {
       width: 32 + (mouseSpeed * 0.05),
@@ -96,7 +97,8 @@ const CustomCursor = () => {
     text: {
       width: 120,
       height: 120,
-      mixBlendMode: "difference",
+      // Fix: Use a specific CSS mix-blend-mode value instead of a string
+      mixBlendMode: "difference" as const,
       backgroundColor: "rgba(255, 255, 255, 0.05)",
       border: "1px solid rgba(255, 255, 255, 0.2)",
       x: mousePosition.x - 60,
