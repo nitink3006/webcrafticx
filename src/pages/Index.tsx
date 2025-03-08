@@ -11,10 +11,12 @@ import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import ProjectModal from '../components/ProjectModal';
+import { mouseTracker } from '../utils/animations';
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [cursorVariant, setCursorVariant] = useState("default");
   const { scrollYProgress } = useScroll({ 
     container: containerRef
   });
@@ -25,7 +27,7 @@ const Index = () => {
     restDelta: 0.001
   });
 
-  // Track mouse position
+  // Track mouse position for all sections
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
@@ -35,8 +37,79 @@ const Index = () => {
     };
     
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    
+    // Add hover listeners for interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, [role="button"], input, select, textarea');
+    
+    const handleMouseEnter = () => setCursorVariant("hover");
+    const handleMouseLeave = () => setCursorVariant("default");
+    
+    interactiveElements.forEach(element => {
+      element.addEventListener('mouseenter', handleMouseEnter);
+      element.addEventListener('mouseleave', handleMouseLeave);
+    });
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      
+      interactiveElements.forEach(element => {
+        element.removeEventListener('mouseenter', handleMouseEnter);
+        element.removeEventListener('mouseleave', handleMouseLeave);
+      });
+    };
   }, []);
+  
+  // Cursor variants
+  const cursorVariants = {
+    default: {
+      width: '24px',
+      height: '24px',
+      backgroundColor: 'rgba(255, 255, 255, 0)',
+      border: '2px solid rgba(99, 102, 241, 0.8)',
+      transition: {
+        type: 'spring',
+        damping: 25,
+        stiffness: 150,
+        mass: 0.5
+      }
+    },
+    hover: {
+      width: '40px',
+      height: '40px',
+      backgroundColor: 'rgba(99, 102, 241, 0.1)',
+      border: '2px solid rgba(99, 102, 241, 0.5)',
+      mixBlendMode: 'difference',
+      transition: {
+        type: 'spring',
+        damping: 15,
+        stiffness: 150
+      }
+    }
+  };
+  
+  // Smaller dot cursor variants
+  const dotVariants = {
+    default: {
+      width: '6px',
+      height: '6px',
+      backgroundColor: 'rgba(99, 102, 241, 0.8)',
+      transition: {
+        type: 'spring',
+        damping: 10,
+        stiffness: 200
+      }
+    },
+    hover: {
+      width: '10px',
+      height: '10px',
+      backgroundColor: 'rgba(99, 102, 241, 1)',
+      transition: {
+        type: 'spring',
+        damping: 10,
+        stiffness: 200
+      }
+    }
+  };
   
   // Lazy load ThreeJS
   useEffect(() => {
@@ -60,45 +133,37 @@ const Index = () => {
         style={{ scaleX }}
       />
       
-      {/* Custom cursor for desktop */}
+      {/* Enhanced custom cursor for desktop */}
       <motion.div
-        className="fixed w-8 h-8 rounded-full border-2 border-indigo-500 pointer-events-none z-[200] hidden md:block mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 16,
-          y: mousePosition.y - 16
-        }}
-        transition={{
-          type: "spring",
-          damping: 25,
-          stiffness: 150,
-          mass: 0.3
+        className="fixed rounded-full pointer-events-none z-[200] hidden md:block mix-blend-difference"
+        animate={cursorVariant}
+        variants={cursorVariants}
+        style={{
+          left: mousePosition.x - 12,
+          top: mousePosition.y - 12
         }}
       />
       
       <motion.div
-        className="fixed w-2 h-2 rounded-full bg-indigo-600 pointer-events-none z-[201] hidden md:block mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 1,
-          y: mousePosition.y - 1
-        }}
-        transition={{
-          type: "spring",
-          damping: 15,
-          stiffness: 200,
-          mass: 0.1
+        className="fixed rounded-full pointer-events-none z-[201] hidden md:block"
+        animate={cursorVariant}
+        variants={dotVariants}
+        style={{
+          left: mousePosition.x - 3,
+          top: mousePosition.y - 3
         }}
       />
       
       <Navbar />
       
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Work />
-        <Team />
-        <Testimonials />
-        <Contact />
+      <main className="mouse-animation-container">
+        <Hero parentMousePosition={mousePosition} />
+        <About parentMousePosition={mousePosition} />
+        <Services parentMousePosition={mousePosition} />
+        <Work parentMousePosition={mousePosition} />
+        <Team parentMousePosition={mousePosition} />
+        <Testimonials parentMousePosition={mousePosition} />
+        <Contact parentMousePosition={mousePosition} />
       </main>
       
       <Footer />

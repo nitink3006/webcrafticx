@@ -1,25 +1,14 @@
-
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import ThreeScene from './ThreeScene';
 import { fadeIn, fadeUp, staggerContainer } from '../utils/animations';
 
-const Hero = () => {
+interface HeroProps {
+  parentMousePosition: { x: number; y: number };
+}
+
+const Hero = ({ parentMousePosition }: HeroProps) => {
   const heroRef = useRef<HTMLDivElement>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  
-  // Track mouse position for parallax effects
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: e.clientX,
-        y: e.clientY
-      });
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
   
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -31,8 +20,8 @@ const Hero = () => {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
   
   // Calculate mouse-based transformations
-  const calcMouseX = mousePosition.x / (typeof window !== 'undefined' ? window.innerWidth : 1);
-  const calcMouseY = mousePosition.y / (typeof window !== 'undefined' ? window.innerHeight : 1);
+  const calcMouseX = parentMousePosition.x / (typeof window !== 'undefined' ? window.innerWidth : 1);
+  const calcMouseY = parentMousePosition.y / (typeof window !== 'undefined' ? window.innerHeight : 1);
   
   const moveX = useTransform(() => (calcMouseX - 0.5) * 20);
   const moveY = useTransform(() => (calcMouseY - 0.5) * 20);
@@ -119,13 +108,14 @@ const Hero = () => {
 
         {/* Interactive floating elements that follow mouse */}
         <AnimatePresence>
+          {/* Make circles smaller as requested */}
           <motion.div
-            className="absolute -left-10 top-1/3 w-12 h-12 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 opacity-30 z-10 hidden md:block"
+            className="absolute -left-10 top-1/3 w-8 h-8 md:w-16 md:h-16 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 opacity-30 z-10 hidden md:block"
             animate={{ 
               y: [0, 15, 0],
               rotate: 360,
               scale: [1, 1.1, 1],
-              x: moveX.get() * -30,
+              x: calcMouseX * -40,
             }}
             transition={{ 
               y: { duration: 4, repeat: Infinity, ease: "easeInOut" },
@@ -135,12 +125,12 @@ const Hero = () => {
           />
           
           <motion.div
-            className="absolute right-10 bottom-1/3 w-16 h-16 md:w-24 md:h-24 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 opacity-20 z-10 hidden md:block"
+            className="absolute right-10 bottom-1/3 w-12 h-12 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 opacity-20 z-10 hidden md:block"
             animate={{ 
               y: [0, -20, 0],
               rotate: -360,
               scale: [1, 1.15, 1],
-              x: moveX.get() * 30,
+              x: calcMouseX * 40,
             }}
             transition={{ 
               y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 },
@@ -150,10 +140,10 @@ const Hero = () => {
           />
           
           <motion.div
-            className="absolute left-1/3 top-1/4 w-10 h-10 md:w-14 md:h-14 rounded-full bg-gradient-to-r from-green-300 to-teal-500 opacity-25 z-10 hidden md:block"
+            className="absolute left-1/3 top-1/4 w-8 h-8 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-green-300 to-teal-500 opacity-25 z-10 hidden md:block"
             animate={{ 
               y: [0, 12, 0],
-              x: [0, -12, 0, moveX.get() * 20],
+              x: [0, -12, 0, calcMouseX * 30],
               rotate: 180,
               scale: [1, 1.1, 1],
             }}
@@ -216,14 +206,14 @@ const Hero = () => {
       
       {/* Smaller circular elements with gradients that follow mouse */}
       <motion.div
-        className="absolute w-[200px] h-[200px] sm:w-[400px] sm:h-[400px] md:w-[600px] md:h-[600px] lg:w-[800px] lg:h-[800px] border-2 border-indigo-100 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-gradient-to-br from-indigo-50 to-transparent opacity-70"
+        className="absolute w-[150px] h-[150px] sm:w-[300px] sm:h-[300px] md:w-[450px] md:h-[450px] lg:w-[600px] lg:h-[600px] border-2 border-indigo-100 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-gradient-to-br from-indigo-50 to-transparent opacity-70"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ 
           scale: 1, 
           opacity: 0.7,
           rotate: 360,
-          x: moveX.get() * 15,
-          y: moveY.get() * 15
+          x: calcMouseX * 20 - 10,
+          y: calcMouseY * 20 - 10
         }}
         transition={{ 
           scale: { duration: 1.5, ease: [0.19, 1, 0.22, 1] },
@@ -233,14 +223,14 @@ const Hero = () => {
       />
       
       <motion.div
-        className="absolute w-[100px] h-[100px] sm:w-[200px] sm:h-[200px] md:w-[300px] md:h-[300px] lg:w-[400px] lg:h-[400px] border-2 border-purple-100 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-gradient-to-tr from-purple-50 to-transparent opacity-80"
+        className="absolute w-[75px] h-[75px] sm:w-[150px] sm:h-[150px] md:w-[225px] md:h-[225px] lg:w-[300px] lg:h-[300px] border-2 border-purple-100 rounded-full left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 bg-gradient-to-tr from-purple-50 to-transparent opacity-80"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ 
           scale: 1, 
           opacity: 0.8,
           rotate: -360,
-          x: moveX.get() * -20,
-          y: moveY.get() * -20
+          x: calcMouseX * -25 + 12.5,
+          y: calcMouseY * -25 + 12.5
         }}
         transition={{ 
           scale: { duration: 1.5, ease: [0.19, 1, 0.22, 1], delay: 0.2 },
@@ -253,8 +243,8 @@ const Hero = () => {
       <motion.div
         className="fixed w-6 h-6 rounded-full bg-indigo-600 opacity-30 pointer-events-none z-50 hidden md:block"
         animate={{
-          x: mousePosition.x - 12,
-          y: mousePosition.y - 12,
+          x: parentMousePosition.x - 12,
+          y: parentMousePosition.y - 12,
           scale: [1, 1.2, 1],
         }}
         transition={{

@@ -42,10 +42,10 @@ export const staggerContainer: Variants = {
   }
 };
 
-// Mouse tracking animation
+// Enhanced mouse tracking animation
 export const mouseTracker = (mouseX: number, mouseY: number, factor = 1) => ({
-  x: (mouseX - 0.5) * factor,
-  y: (mouseY - 0.5) * factor,
+  x: (mouseX - window.innerWidth / 2) / (window.innerWidth / 2) * factor,
+  y: (mouseY - window.innerHeight / 2) / (window.innerHeight / 2) * factor,
   transition: {
     type: "spring",
     damping: 15,
@@ -79,11 +79,11 @@ export const mouseParallaxChild = (depth: number = 10): Variants => ({
   }
 });
 
-// Magic cursor animation
+// Enhanced magic cursor animation with hover and active states
 export const magicCursor = {
   default: {
     scale: 1,
-    borderColor: "rgba(99, 102, 241, 0.6)", // indigo-500 with opacity
+    borderColor: "rgba(99, 102, 241, 0.6)",
     backgroundColor: "rgba(0, 0, 0, 0)"
   },
   hover: {
@@ -95,8 +95,59 @@ export const magicCursor = {
       borderColor: { duration: 0.3 },
       backgroundColor: { duration: 0.3 }
     }
+  },
+  active: {
+    scale: 0.8,
+    borderColor: "rgba(99, 102, 241, 0.8)",
+    backgroundColor: "rgba(99, 102, 241, 0.3)",
+    transition: {
+      duration: 0.1
+    }
   }
 };
+
+// Mouse position based 3D rotation
+export const mouse3DRotation = (mouseX: number, mouseY: number, sensitivity = 10) => {
+  // Normalize mouse position to -1 to 1 range
+  const normalizedX = (mouseX / window.innerWidth) * 2 - 1;
+  const normalizedY = (mouseY / window.innerHeight) * 2 - 1;
+  
+  return {
+    rotateX: -normalizedY * sensitivity,
+    rotateY: normalizedX * sensitivity,
+    transition: {
+      type: "spring",
+      damping: 20,
+      stiffness: 100
+    }
+  };
+};
+
+// Mouse follow animation for floating elements
+export const mouseFollow = (mouseX: number, mouseY: number, delay = 0, intensity = 20) => {
+  const normalizedX = (mouseX / window.innerWidth) * 2 - 1;
+  const normalizedY = (mouseY / window.innerHeight) * 2 - 1;
+  
+  return {
+    x: normalizedX * intensity,
+    y: normalizedY * intensity,
+    transition: {
+      type: "spring",
+      damping: 25,
+      stiffness: 100,
+      delay
+    }
+  };
+};
+
+// Cursor spotlight effect (radial gradient following mouse)
+export const cursorSpotlight = (mouseX: number, mouseY: number) => ({
+  background: `radial-gradient(circle at ${mouseX}px ${mouseY}px, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 50%)`,
+  transition: {
+    type: "tween",
+    duration: 0.2
+  }
+});
 
 // Slide in from right
 export const slideRight: Variants = {
@@ -373,7 +424,7 @@ export const rotateAnimation: Variants = {
   }
 };
 
-// 3D tilt card animation
+// Enhanced 3D tilt card animation with mouse position
 export const tiltCardAnimation = {
   rest: {
     rotateX: 0,
@@ -399,6 +450,93 @@ export const tiltCardAnimation = {
     transition: {
       duration: 0.3,
       ease: [0.22, 1, 0.36, 1]
+    }
+  }
+};
+
+// New mouse attraction animation
+export const mouseAttraction = (mouseX: number, mouseY: number, elementX: number, elementY: number, attraction = 0.2, maxDistance = 300) => {
+  // Calculate distance between mouse and element
+  const dx = mouseX - elementX;
+  const dy = mouseY - elementY;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+  
+  // If distance is less than maxDistance, apply attraction
+  if (distance < maxDistance) {
+    const factor = (1 - distance / maxDistance) * attraction;
+    return {
+      x: dx * factor,
+      y: dy * factor,
+      transition: {
+        type: "spring",
+        damping: 20,
+        stiffness: 200
+      }
+    };
+  }
+  
+  // Otherwise, return to original position
+  return {
+    x: 0,
+    y: 0,
+    transition: {
+      type: "spring",
+      damping: 20,
+      stiffness: 200
+    }
+  };
+};
+
+// Cursor variants for interactive elements
+export const cursorVariants = {
+  default: {
+    width: 24,
+    height: 24,
+    backgroundColor: "rgba(255, 255, 255, 0)",
+    border: "2px solid rgba(99, 102, 241, 0.8)",
+    mixBlendMode: "difference",
+    zIndex: 1000,
+    transition: {
+      type: "spring",
+      damping: 25,
+      stiffness: 150,
+      mass: 0.5
+    }
+  },
+  hover: {
+    width: 40,
+    height: 40,
+    backgroundColor: "rgba(99, 102, 241, 0.1)",
+    border: "2px solid rgba(99, 102, 241, 0.5)",
+    transition: {
+      type: "spring",
+      damping: 15,
+      stiffness: 150
+    }
+  },
+  text: {
+    width: 150,
+    height: 150,
+    backgroundColor: "rgba(99, 102, 241, 0.05)",
+    border: "2px solid rgba(99, 102, 241, 0.3)",
+    mixBlendMode: "normal",
+    zIndex: 1,
+    transition: {
+      type: "spring",
+      damping: 15,
+      stiffness: 100
+    }
+  },
+  button: {
+    width: 80,
+    height: 80,
+    backgroundColor: "rgba(99, 102, 241, 0.15)",
+    border: "2px solid rgba(99, 102, 241, 0.5)",
+    mixBlendMode: "difference",
+    transition: {
+      type: "spring",
+      damping: 10,
+      stiffness: 150
     }
   }
 };
