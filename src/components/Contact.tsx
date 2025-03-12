@@ -172,7 +172,7 @@ const Contact = () => {
   <h4 className="text-lg font-medium mb-4">Follow Us</h4>
   <div className="flex space-x-4">
     {[
-      { name: 'facebook', url: 'https://facebook.com' },
+      // { name: 'facebook', url: 'https://facebook.com' },
       { name: 'instagram', url: 'https://www.instagram.com/webcrafticx?igsh=MXVlOWZkdDQxMTg3bQ==' },
       { name: 'linkedin', url: 'https://www.linkedin.com/company/webcrafticx/' },
     ].map((social, index) => (

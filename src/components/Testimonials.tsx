@@ -20,27 +20,29 @@ const testimonials = [
     image: aditya,
     content: 'Most web development sites focus purely on utility, but Webcrafticx transforms it into an art form. The design ethos balances minimalism with depth, making complex web-building accessible without sacrificing sophistication.I really appreciate the work of WebcrafticX.'
   },
+  // {
+  //   name: 'David Chen',
+  //   company: 'InnovateCorp',
+  //   position: 'Marketing Director',
+  //   image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
+  //   content: "We've worked with several agencies in the past, but none have delivered the level of quality and ROI that this team consistently provides. They're true partners in our success."
+  // },
   {
-    name: 'David Chen',
-    company: 'InnovateCorp',
-    position: 'Marketing Director',
-    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
-    content: "We've worked with several agencies in the past, but none have delivered the level of quality and ROI that this team consistently provides. They're true partners in our success."
+   name: "Anonymous",
+    company: "Anonymous",
+    position: "Founder",
+  "image": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
+,
+    content: 'As a founder, I understand the importance of digital presence, and WebCrafticX has exceeded my expectations. Their innovative approach and attention to detail set them apart in the industry.'
   },
-  {
-    name: 'Sophia Rodriguez',
-    company: 'Future Brands',
-    position: 'Creative Director',
-    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
-    content: 'Their ability to translate our brand vision into digital experiences is remarkable. The mobile app they developed for us became an instant hit with our customers.'
+    {
+    name: "Anonymous",
+    company: "Anonymous",
+    position: "Founder",
+"image": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
+,
+    content: "We've worked with several agencies in the past, but none have delivered the level of quality and ROI that WebCrafticX consistently provides. They're true partners in our success."
   },
-  {
-    name: 'Marcus Johnson',
-    company: 'Elevate Solutions',
-    position: 'Operations Manager',
-    image: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
-    content: 'From strategy to execution, they deliver excellence at every stage. Our e-commerce revenue has increased by 215% since implementing their recommendations.'
-  }
 ];
 
 const Testimonials = () => {

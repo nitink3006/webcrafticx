@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
@@ -74,6 +73,19 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Add body overflow control for mobile menu
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   const logoVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: { 
@@ -88,13 +100,25 @@ const Navbar = () => {
 
   const navItemVariants = {
     hidden: { opacity: 0, y: -10 },
-    visible: (custom: number) => ({
+    visible: (custom) => ({
       opacity: 1,
       y: 0,
       transition: {
         delay: 0.1 + custom * 0.1,
         duration: 0.5,
         ease: [0.22, 1, 0.36, 1]
+      }
+    })
+  };
+
+  const mobileNavItemVariants = {
+    hidden: { opacity: 0, x: -10 },
+    visible: (custom) => ({
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: 0.1 + custom * 0.08,
+        duration: 0.3,
       }
     })
   };
@@ -169,7 +193,7 @@ const Navbar = () => {
         
         {/* Mobile Navigation Toggle with improved design */}
         <motion.button
-          className="md:hidden z-10 p-2 bg-white/80 rounded-full backdrop-blur-sm shadow-md"
+          className="md:hidden z-50 p-2 bg-white/80 rounded-full backdrop-blur-sm shadow-md"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           whileTap={{ scale: 0.9 }}
           variants={logoVariants}
@@ -182,44 +206,85 @@ const Navbar = () => {
         </motion.button>
       </div>
       
-      {/* Mobile Navigation Menu with enhanced design */}
+      {/* Enhanced Mobile Navigation Menu with full height and background */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-gradient-to-b from-indigo-900 to-purple-900"
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: "0%" }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-40 md:hidden h-screen flex flex-col"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              background: "linear-gradient(135deg, rgba(238, 242, 255, 0.95) 0%, rgba(252, 231, 255, 0.95) 100%)",
+              backgroundImage: "url('data:image/svg+xml,%3Csvg width=\"100\" height=\"100\" viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z\" fill=\"%234F46E5\" fill-opacity=\"0.05\" fill-rule=\"evenodd\"/%3E%3C/svg%3E'), linear-gradient(135deg, rgba(238, 242, 255, 0.95) 0%, rgba(252, 231, 255, 0.95) 100%)",
+              backgroundSize: "cover",
+              backdropFilter: "blur(8px)"
+            }}
           >
-            <div className="flex flex-col items-center justify-center h-full space-y-8">
-              {navLinks.map((link, index) => (
-                <motion.a
-                  key={link.title}
-                  href={link.href}
-                  className="text-white text-2xl font-semibold"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
-                  onClick={() => setMobileMenuOpen(false)}
+            <div className="flex flex-col h-full">
+              {/* Mobile Menu Header */}
+              <div className="flex items-center justify-between p-6 border-b border-indigo-100">
+                <motion.span 
+                  className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                 >
-                  {link.title}
-                </motion.a>
-              ))}
-              <motion.button 
-                className="mt-4 px-8 py-3 rounded-md bg-white text-indigo-700 font-medium transition-all duration-300 shadow-xl hover:bg-gray-100"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navLinks.length * 0.1, duration: 0.3 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  document.getElementById('project-modal')?.click();
-                }}
-              >
-                Start a Project
-              </motion.button>
+                  WebCrafticX
+                </motion.span>
+                <motion.button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="rounded-full p-2 hover:bg-indigo-50"
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <X size={24} className="text-indigo-600" />
+                </motion.button>
+              </div>
+              
+              {/* Mobile Menu Links with increased height and spacing */}
+              <div className="flex-1 flex flex-col justify-center overflow-y-auto py-12 px-8">
+                <div className="space-y-5">
+                  {navLinks.map((link, index) => (
+                    <motion.a
+                      key={link.title}
+                      href={link.href}
+                      className={`text-2xl font-medium block py-2 ${
+                        activeSection === link.href.substring(1)
+                          ? 'text-indigo-600'
+                          : 'text-gray-800'
+                      }`}
+                      variants={mobileNavItemVariants}
+                      initial="hidden"
+                      animate="visible"
+                      custom={index}
+                      onClick={() => setMobileMenuOpen(false)}
+                      whileHover={{ x: 5, color: "#4F46E5" }}
+                    >
+                      {link.title}
+                      {activeSection === link.href.substring(1) && (
+                        <motion.div className="h-1 w-12 bg-indigo-600 mt-1 rounded-full" />
+                      )}
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+              
+              {/* Mobile Menu Footer */}
+              <div className="p-8 border-t border-indigo-100">
+                <motion.button
+                  className="w-full py-5 rounded-xl bg-indigo-600 text-white font-medium text-lg shadow-lg shadow-indigo-500/30"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  whileHover={{ scale: 1.02, boxShadow: "0 15px 25px rgba(79, 70, 229, 0.35)" }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    document.getElementById('project-modal')?.click();
+                  }}
+                >
+                  Start a Project
+                </motion.button>
+              </div>
             </div>
           </motion.div>
         )}

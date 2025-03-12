@@ -111,7 +111,7 @@ webcraftix3@gmail.com
 <div className="flex space-x-6">
   {[
     // { name: 'Twitter', url: 'https://twitter.com' },
-    { name: 'Facebook', url: 'https://facebook.com' },
+    // { name: 'Facebook', url: 'https://facebook.com' },
     { name: 'Instagram', url: 'https://www.instagram.com/webcrafticx?igsh=MXVlOWZkdDQxMTg3bQ==' },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/company/webcrafticx/' },
   ].map((social, index) => (
