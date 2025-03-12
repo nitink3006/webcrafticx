@@ -2,6 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight, Mail, Phone, MapPin } from 'lucide-react';
+import logo from "../../public/logo.png"
 
 const footerLinks = [
   {
@@ -9,29 +10,29 @@ const footerLinks = [
     links: [
       { name: 'UI/UX Design', href: '#services' },
       { name: 'Web Development', href: '#services' },
-      { name: 'Mobile Apps', href: '#services' },
+      { name: 'E-commerce Solutions', href: '#services' },
       { name: 'Digital Marketing', href: '#services' },
-      { name: 'Brand Strategy', href: '#services' }
+      { name: 'Graphic Designing', href: '#services' }
     ]
   },
   {
     title: 'Company',
     links: [
-      { name: 'About Us', href: '#' },
+      { name: 'Home', href: '#' },
+      { name: 'About Us', href: '#about' },
       { name: 'Our Work', href: '#work' },
       { name: 'Team', href: '#team' },
-      { name: 'Careers', href: '#' },
-      { name: 'Blog', href: '#' }
+      { name: 'Contact Us', href: '#contact' }
     ]
   },
   {
     title: 'Resources',
     links: [
-      { name: 'Case Studies', href: '#' },
+      { name: 'Refund Policy', href: '/refund' },
       { name: 'Testimonials', href: '#testimonials' },
-      { name: 'FAQs', href: '#' },
-      { name: 'Privacy Policy', href: '#' },
-      { name: 'Terms of Service', href: '#' }
+      // { name: 'FAQs', href: '#' },
+      { name: 'Privacy Policy', href: '/privacy' },
+      { name: 'Terms of Service', href: '/terms' }
     ]
   }
 ];
@@ -48,23 +49,30 @@ const Footer = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Visionary
-            </motion.a>
+            <img src={logo} alt="" className='w-[9rem] h-[6rem] -mt-4'/>     
+       </motion.a>
             <p className="text-white/70 max-w-md mb-6">
               We craft digital experiences that bring ideas to life and help brands connect with their audiences in meaningful ways.
             </p>
             <div className="space-y-4">
-              <div className="flex items-start gap-3">
+              {/* <div className="flex items-start gap-3">
                 <MapPin size={20} className="text-white/70 mt-1" />
                 <p className="text-white/70">123 Innovation Drive, Tech City, TC 10101</p>
-              </div>
+              </div> */}
               <div className="flex items-center gap-3">
                 <Phone size={20} className="text-white/70" />
-                <p className="text-white/70">+1 (555) 123-4567</p>
+                <p className="text-white/70">+91 8789088935, 7488668170</p>
               </div>
               <div className="flex items-center gap-3">
                 <Mail size={20} className="text-white/70" />
-                <p className="text-white/70">hello@visionaryagency.com</p>
+                            <a
+              href="mailto:webcraftix3@gmail.com"
+              className="text-white/70 hover:underline"
+              target='__blank'
+            >
+webcraftix3@gmail.com
+            </a>
+                {/* <p className="text-white/70">webcraftix3@gmail.com</p> */}
               </div>
             </div>
           </div>
@@ -98,21 +106,29 @@ const Footer = () => {
         
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-white/70 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} Visionary Agency. All rights reserved.
+            © {new Date().getFullYear()} WebCrafticX. All rights reserved.
           </p>
-          <div className="flex space-x-6">
-            {['Twitter', 'Facebook', 'Instagram', 'LinkedIn'].map((social, index) => (
-              <motion.a 
-                key={index}
-                href={`#${social.toLowerCase()}`}
-                className="text-white/70 hover:text-white transition-colors"
-                whileHover={{ y: -2 }}
-                whileTap={{ y: 0 }}
-              >
-                {social}
-              </motion.a>
-            ))}
-          </div>
+<div className="flex space-x-6">
+  {[
+    // { name: 'Twitter', url: 'https://twitter.com' },
+    { name: 'Facebook', url: 'https://facebook.com' },
+    { name: 'Instagram', url: 'https://www.instagram.com/webcrafticx?igsh=MXVlOWZkdDQxMTg3bQ==' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/company/webcrafticx/' },
+  ].map((social, index) => (
+    <motion.a 
+      key={index}
+      href={social.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-white/70 hover:text-white transition-colors"
+      whileHover={{ y: -2 }}
+      whileTap={{ y: 0 }}
+    >
+      {social.name}
+    </motion.a>
+  ))}
+</div>
+
         </div>
       </div>
     </footer>

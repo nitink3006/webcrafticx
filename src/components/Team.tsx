@@ -3,52 +3,79 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Github, Linkedin, Twitter } from 'lucide-react';
 import { staggerContainer, fadeUp } from '../utils/animations';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import sarthak from "../../public/sarthak.png";
+import nitin from "../../public/nitin.png";
+import karan from "../../public/karan.jpg";
+import deba from "../../public/deba.jpg";
+import nikhil from "../../public/nikhil.jpg"
+import sar from "../../public/Personal-Photoroom-modified.png"
 
 const teamMembers = [
-  {
-    name: 'Alex Morgan',
-    role: 'CEO & Creative Director',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
-    bio: 'With over 15 years of experience in digital design, Alex leads our creative vision and strategic direction.',
-    social: {
-      twitter: '#',
-      linkedin: '#',
-      github: '#'
-    }
-  },
-  {
-    name: 'Sarah Chen',
-    role: 'Lead Designer',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
-    bio: 'Sarah combines artistic talent with user-centered design principles to create beautiful, functional interfaces.',
-    social: {
-      twitter: '#',
-      linkedin: '#',
-      github: '#'
-    }
-  },
-  {
-    name: 'Michael Rodriguez',
-    role: 'Technical Director',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
-    bio: 'Michael oversees all technical aspects of our projects, ensuring elegant solutions to complex challenges.',
-    social: {
-      twitter: '#',
-      linkedin: '#',
-      github: '#'
-    }
-  },
-  {
-    name: 'Emily Jackson',
-    role: 'Project Manager',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=388&q=80',
-    bio: 'Emily ensures our projects run smoothly, on time, and within budget while exceeding client expectations.',
-    social: {
-      twitter: '#',
-      linkedin: '#',
-      github: '#'
-    }
+{
+  name: "Karan",
+  role: "Developer",
+  image: karan,
+  bio: "A skilled developer with expertise in crafting interactive and user-friendly web applications.",
+  social: {
+    // twitter: "#",
+    linkedin: "https://www.linkedin.com/in/karan-kumar-gupta-8608a0253?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    github: "https://github.com/karang152"
   }
+}
+,
+{
+  name: "Sarthak",
+  role: "Developer, Digital Marketer",
+  image: sarthak,
+  bio: "Combines technical development skills with digital marketing expertise to build impactful and engaging online experiences.",
+  social: {
+    twitter: "#",
+    linkedin: "https://www.linkedin.com/in/sarthak-rai?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    github: "https://github.com/sarthak2685"
+  }
+}
+,
+ {
+  name: "Nitin",
+  role: "Developer, Designer, Digital Marketer",
+  image: nitin,
+  bio: "Excels in development, design, and digital marketing, crafting innovative solutions that merge creativity with technology.",
+  social: {
+    twitter: "#",
+    linkedin: "https://www.linkedin.com/in/nitink30/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    github: "https://github.com/nitink3006"
+  }
+}
+,
+{
+  name: "Debashish",
+  role: "Developer",
+  image: deba,
+  bio: "Dedicated to delivering high-quality solutions that enhance performance and reliability.",
+  social: {
+    twitter: "#",
+    linkedin: "https://www.linkedin.com/in/debashish-sarkar-7109491b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+    github: "https://github.com/coder8-cpu"
+  }
+}
+,
+{
+  name: 'Nikhil',
+  role: 'Developer',
+  image: nikhil,
+  bio: 'Passionate developer specializing in building scalable and efficient applications. He ensures high-quality code and innovative solutions.',
+  social: {
+    twitter: '#',
+    linkedin: 'https://www.linkedin.com/in/nikhil-raghav-683573225',
+    github: 'https://github.com/ErNikhil0'
+  }
+}
+
 ];
 
 const Team = () => {
@@ -88,57 +115,63 @@ const Team = () => {
           </motion.p>
         </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {teamMembers.map((member, index) => (
-            <motion.div 
-              key={index}
-              className="bg-white rounded-xl overflow-hidden shadow-sm border border-border/30 group"
-              variants={fadeUp}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              <div className="relative overflow-hidden">
-                <img 
-                  src={member.image} 
-                  alt={member.name} 
-                  className="w-full h-64 object-cover object-center transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
-                  <div className="flex items-center space-x-4">
-                    <motion.a 
-                      href={member.social.twitter}
-                      className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Twitter size={18} />
-                    </motion.a>
-                    <motion.a 
-                      href={member.social.linkedin}
-                      className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Linkedin size={18} />
-                    </motion.a>
-                    <motion.a 
-                      href={member.social.github}
-                      className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.9 }}
-                    >
-                      <Github size={18} />
-                    </motion.a>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="font-bold text-xl mb-1">{member.name}</h3>
-                <p className="text-primary/80 text-sm mb-3">{member.role}</p>
-                <p className="text-foreground/70 text-sm">{member.bio}</p>
-              </div>
-            </motion.div>
-          ))}
+<Swiper
+  modules={[Autoplay, Navigation, Pagination]}
+  spaceBetween={20}
+  slidesPerView={1}
+  breakpoints={{
+    640: { slidesPerView: 2 },
+    1024: { slidesPerView: 4 },
+  }}
+  loop={true}
+  autoplay={{ delay: 3000, disableOnInteraction: false }}
+  className="w-full"
+>
+  {teamMembers.map((member, index) => (
+    <SwiperSlide key={index} className="h-[450px]"> {/* Set a fixed height */}
+      <motion.div
+        className="bg-white rounded-xl overflow-hidden shadow-sm border border-border/30 group h-full flex flex-col"
+        whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      >
+        <div className="relative overflow-hidden h-64">
+          <img
+            src={member.image}
+            alt={member.name}
+            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
+            <div className="flex items-center space-x-4">
+              <motion.a
+                href={member.social.linkedin}
+                className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
+                target="__blank"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Linkedin size={18} />
+              </motion.a>
+              <motion.a
+                href={member.social.github}
+                className="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"
+                target="__blank"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <Github size={18} />
+              </motion.a>
+            </div>
+          </div>
         </div>
+        <div className="p-6 flex-grow"> {/* Ensures text section stretches properly */}
+          <h3 className="font-bold text-xl mb-1">{member.name}</h3>
+          <p className="text-primary/80 text-sm mb-3">{member.role}</p>
+          <p className="text-foreground/70 text-sm">{member.bio}</p>
+        </div>
+      </motion.div>
+    </SwiperSlide>
+  ))}
+</Swiper>
+
       </motion.div>
     </section>
   );

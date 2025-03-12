@@ -3,36 +3,69 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link, ExternalLink, ArrowRight } from 'lucide-react';
 import { staggerContainer, fadeUp } from '../utils/animations';
+import mock from "../../public/mockperiod.png"
+import asap from "../../public/asap.png"
+import bus from "../../public/bus.png"
+import opus from "../../public/opus.png"
+import urban from "../../public/urban.png"
+import fabspin from "../../public/fabspin.png"
 
 const projects = [
-  {
-    title: 'E-Commerce Redesign',
-    category: 'UI/UX Design',
-    image: 'https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1789&q=80',
-    description: 'Complete redesign of an e-commerce platform focusing on conversion optimization and user experience improvements.',
-    link: '#'
-  },
-  {
-    title: 'Financial Dashboard',
-    category: 'Web Development',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80',
-    description: 'Interactive financial dashboard with real-time data visualization and customizable reporting features.',
-    link: '#'
-  },
-  {
-    title: 'Travel Companion App',
-    category: 'Mobile Apps',
-    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1721&q=80',
-    description: 'Cross-platform mobile application for travelers with itinerary management, location-based recommendations, and offline maps.',
-    link: '#'
-  },
-  {
-    title: 'Brand Identity System',
-    category: 'Brand Strategy',
-    image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80',
-    description: 'Comprehensive brand identity system including logo design, visual language, and implementation guidelines.',
-    link: '#'
-  }
+ {
+  title: 'Mock Test Platform',
+  category: 'Web Development',
+  image: mock,
+  description: 'A fully optimized mock test platform designed for an intuitive user experience, ensuring seamless navigation and enhanced accessibility for students.',
+  link: 'https://www.mockperiod.com'
+},
+
+{
+  title: 'ASAP - Smart Cleaning Solutions',
+  category: 'Web Development',
+  image: asap,
+  description: 'ASAP is a modern cleaning service platform designed for efficient management and coordination. It enables real-time task tracking, automated scheduling, and seamless communication between service providers and clients, ensuring a cleaner and healthier environment.',
+  link: 'https://asap-silk.vercel.app/'
+}
+,
+{
+  title: 'Bus Service Platform',
+  category: 'Web Development',
+  image: bus,
+  description: 'A smart bus service platform designed for parents to monitor their child’s journey in real-time, receive instant notifications, and make secure payments effortlessly. The platform ensures safety, transparency, and convenience for both parents and service providers.',
+  link: 'https://architectural-studio-lab.vercel.app/'
+}
+,
+// {
+//   title: 'Physiotherapist Platform',
+//   category: 'Web Development',
+//   image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80',
+//   description: 'A professional platform for physiotherapists to host therapy sessions, manage bookings, and connect with clients. It offers live video consultations, session scheduling, exercise plans, and progress tracking, providing a seamless experience for both therapists and patients.',
+//   link: '#'
+// }
+{
+  title: 'Interior Designing Platform',
+  category: 'Web Development',
+  image: opus,
+  description: 'An innovative platform that connects users with professional interior designers, offering virtual consultations, 3D design previews, and budget-friendly customization options. It streamlines project planning, material selection, and real-time collaboration for a seamless design experience.',
+  link: 'https://bus-service-rosy.vercel.app/'
+},
+{
+  title: 'E-Commerce Platform',
+  category: 'Web Development',
+  image: urban,
+  description: 'A feature-rich e-commerce platform designed for seamless online shopping, and efficient order management. It offers personalized recommendations, a user-friendly interface, and robust inventory tracking to enhance the shopping experience for both buyers and sellers.',
+  link: 'https://urban-muse.vercel.app/'
+},
+{
+  title: 'Dry Cleaner Platform',
+  category: 'WordPress Development',
+  image: fabspin,
+  description: 'A modern dry cleaning platform that enables customers to schedule pickups, track orders, and make secure online payments. It offers seamless booking, real-time order status updates, and efficient service management for both customers and dry cleaning businesses.',
+  link: 'https://www.fabspin.com/'
+}
+
+
+
 ];
 
 const Work = () => {
@@ -101,14 +134,17 @@ const Work = () => {
                 </span>
                 <h3 className="text-xl font-bold text-slate-900 mb-2">{project.title}</h3>
                 <p className="text-slate-600 mb-4">{project.description}</p>
-                <motion.a 
-                  href={project.link}
-                  className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-700"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  View Project <ArrowRight size={16} className="ml-1" />
-                </motion.a>
+<motion.a 
+  href={project.link}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-700"
+  whileHover={{ x: 5 }}
+  transition={{ duration: 0.2 }}
+>
+  View Project <ArrowRight size={16} className="ml-1" />
+</motion.a>
+
               </div>
             </motion.div>
           ))}

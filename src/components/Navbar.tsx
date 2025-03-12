@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import logo from "../../public/logo.png"
 
 const navLinks = [
   { title: 'Home', href: '#home' },
@@ -119,9 +120,10 @@ const Navbar = () => {
           whileTap={{ scale: 0.95 }}
         >
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800">
-            Visionary
+            {/* <img src={logo} alt="" /> */}
+            WebCrafticX
           </span>
-          <span className="w-2 h-2 ml-1 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600"></span>
+          {/* <span className="w-2 h-2 ml-1 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600"></span> */}
         </motion.a>
         
         {/* Desktop Navigation with enhanced hover effects */}

@@ -61,10 +61,10 @@ const About = () => {
               variants={fadeUp}
             >
               <p>
-                Founded in 2013, Visionary is a full-service digital agency dedicated to helping brands thrive in an increasingly complex landscape. We blend creativity, technology, and strategy to create meaningful digital experiences that drive results.
+                Founded in 2024, WebCrafticX is a full-service digital agency dedicated to helping brands thrive in an increasingly complex landscape. We blend creativity, technology, and strategy to create meaningful digital experiences that drive results.
               </p>
               <p>
-                Our team of designers, developers, and strategists work collaboratively to solve the most challenging business problems. We pride ourselves on our commitment to quality, attention to detail, and client satisfaction.
+                Our team of designers and developers work collaboratively to solve the most challenging business problems. We pride ourselves on our commitment to quality, attention to detail, and client satisfaction.
               </p>
               <p>
                 Whether you're looking to launch a new product, revamp your brand, or optimize your digital presence, we have the expertise to turn your vision into reality.
@@ -119,7 +119,7 @@ const About = () => {
           </motion.div>
         </div>
         
-        <motion.div 
+        {/* <motion.div 
           className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-24"
           variants={fadeUp}
         >
@@ -143,7 +143,7 @@ const About = () => {
               <p className="text-slate-600">{stat.label}</p>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </motion.div>
     </section>
   );

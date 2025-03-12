@@ -1,38 +1,45 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, Check } from 'lucide-react';
 import { modalAnimation, overlayAnimation } from '../utils/animations';
 import { toast } from "sonner";
+import emailjs from '@emailjs/browser';
 
 const projectTypes = [
   'Website Redesign',
+  'Web Developement',
   'Mobile App',
   'E-commerce',
-  'Branding',
-  'UI/UX Design',
-  'Other'
+  'WordPress',
+  'Graphic Designing',
+  'SEO Management', 
+  'Others'
 ];
 
 const budgetRanges = [
   '$5,000 - $10,000',
-  '$10,000 - $25,000',
-  '$25,000 - $50,000',
-  '$50,000 - $100,000',
-  '$100,000+'
+  '$10,000 - $25,000+',
+  'Rs.5,000 - Rs.10,000',
+  'Rs.10,000 - Rs.25,000',
+  'Rs.25,000 - Rs.50,000',
+  'Rs.50,000 - Rs.100,000',
+  'Rs.100,000+'
 ];
 
 const ProjectModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     company: '',
-    projectType: '',
+    projectType: [], 
     budget: '',
     timeline: '',
-    description: ''
+    description: '',
   });
   
   const steps = 3;
@@ -46,6 +53,17 @@ const ProjectModal = () => {
     setIsOpen(false);
     setStep(1);
     document.body.style.overflow = 'auto';
+    // Reset form data
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
+      projectType: [], 
+      budget: '',
+      timeline: '',
+      description: '',
+    });
   };
   
   const nextStep = () => {
@@ -60,28 +78,68 @@ const ProjectModal = () => {
     }
   };
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would normally submit the form data to your backend
-    console.log('Form submitted:', formData);
+    setIsSubmitting(true);
     
-    // Show success message
-    toast.success("Project inquiry submitted successfully! We'll be in touch soon.");
+    // EmailJS configuration
+    // Replace these with your actual EmailJS service ID, template ID, and public key
+    const serviceId = 'service_x1nsh9s';
+    const templateId = 'template_fiwpt75';
+    const publicKey = 'QiMAPy0YX26Qod3oM';
     
-    // Close the modal
-    closeModal();
+    // Prepare the template parameters
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      number: formData.phone,
+      company_name: formData.company || 'Not provided',
+      project_type: formData.projectType.join(', ') || 'Not selected',
+      budget_range: formData.budget || 'Not selected',
+      timeline: formData.timeline || 'Not specified',
+      description: formData.description,
+      to_email: 'webcraftix3@gmail.com' // You can hardcode the recipient email
+    };
+    
+    // Send the email using EmailJS
+    emailjs.send(serviceId, templateId, templateParams, publicKey)
+      .then((response) => {
+        console.log('SUCCESS!', response.status, response.text);
+        setIsSubmitting(false);
+        
+        // Show success message
+        toast.success("Project inquiry submitted successfully! We'll be in touch soon.");
+        
+        // Close the modal
+        closeModal();
+      })
+      .catch((error) => {
+        console.error('FAILED...', error);
+        setIsSubmitting(false);
+        
+        // Show error message
+        toast.error("Failed to submit your inquiry. Please try again later.");
+      });
   };
   
-  const handleProjectTypeSelect = (type: string) => {
-    setFormData({ ...formData, projectType: type });
+  const handleProjectTypeSelect = (type) => {
+    setFormData((prevData) => {
+      const isSelected = prevData.projectType.includes(type);
+      return {
+        ...prevData,
+        projectType: isSelected
+          ? prevData.projectType.filter((t) => t !== type) // Remove if selected
+          : [...prevData.projectType, type], // Add if not selected
+      };
+    });
   };
   
-  const handleBudgetSelect = (budget: string) => {
+  const handleBudgetSelect = (budget) => {
     setFormData({ ...formData, budget: budget });
   };
   
@@ -175,7 +233,7 @@ const ProjectModal = () => {
                             onChange={handleChange}
                             required
                             className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-                            placeholder="John Doe"
+                            placeholder="Enter a Name"
                           />
                         </div>
                         
@@ -191,9 +249,25 @@ const ProjectModal = () => {
                             onChange={handleChange}
                             required
                             className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-                            placeholder="john@example.com"
+                            placeholder="Enter an Email Address"
                           />
                         </div>
+
+<div>
+  <label htmlFor="phone" className="block text-sm font-medium mb-2">
+    Phone Number
+  </label>
+  <input
+    type="tel"
+    id="phone"
+    name="phone"
+    value={formData.phone}
+    onChange={handleChange}
+    className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+    placeholder="Enter your Number"
+  />
+</div>
+
                         
                         <div>
                           <label htmlFor="company" className="block text-sm font-medium mb-2">
@@ -206,7 +280,7 @@ const ProjectModal = () => {
                             value={formData.company}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-                            placeholder="Your Company"
+                            placeholder="Enter your Company Name"
                           />
                         </div>
                       </motion.div>
@@ -231,7 +305,7 @@ const ProjectModal = () => {
                                 key={type}
                                 type="button"
                                 className={`px-4 py-3 border rounded-lg text-left transition-all ${
-                                  formData.projectType === type 
+                                  formData.projectType.includes(type) // Check if selected
                                     ? 'border-primary bg-primary/5 text-primary' 
                                     : 'border-border hover:border-primary/30'
                                 }`}
@@ -320,7 +394,7 @@ const ProjectModal = () => {
                             <p><span className="font-medium">Name:</span> {formData.name}</p>
                             <p><span className="font-medium">Email:</span> {formData.email}</p>
                             <p><span className="font-medium">Company:</span> {formData.company || 'N/A'}</p>
-                            <p><span className="font-medium">Project Type:</span> {formData.projectType || 'N/A'}</p>
+                            <p><span className="font-medium">Project Type:</span> {formData.projectType.join(', ') || 'N/A'}</p>
                             <p><span className="font-medium">Budget:</span> {formData.budget || 'N/A'}</p>
                             <p><span className="font-medium">Timeline:</span> {formData.timeline || 'N/A'}</p>
                           </div>
@@ -337,6 +411,7 @@ const ProjectModal = () => {
                     type="button"
                     onClick={prevStep}
                     className="px-4 py-2 text-foreground font-medium rounded-lg hover:bg-secondary transition-colors"
+                    disabled={isSubmitting}
                   >
                     Back
                   </button>
@@ -363,10 +438,24 @@ const ProjectModal = () => {
                     className="px-6 py-2 bg-primary text-white font-medium rounded-lg flex items-center gap-2 hover:bg-primary/90 transition-colors"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    disabled={!formData.description}
+                    disabled={!formData.description || isSubmitting}
                   >
-                    Submit
-                    <Check size={18} />
+                    {isSubmitting ? (
+                      <>
+                        <span>Submitting...</span>
+                        <span className="animate-spin ml-2">
+                          <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        Submit
+                        <Check size={18} />
+                      </>
+                    )}
                   </motion.button>
                 )}
               </div>
