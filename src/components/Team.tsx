@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import sarthak from "../../public/sarthak.png";
-import nitin from "../../public/nitin.png";
+import nitin from "../../public/nitin.jpg";
 import karan from "../../public/karan.jpg";
 import deba from "../../public/deba.jpg";
 import nikhil from "../../public/nikhil.jpg"

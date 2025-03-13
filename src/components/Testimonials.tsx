@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Star, Quote } from 'lucide-react';
 import { fadeUp } from '../utils/animations';
 import aditya from "../../public/aditya.jpg";
+import rishi from "../../public/rishi.jpg"
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
@@ -20,13 +21,13 @@ const testimonials = [
     image: aditya,
     content: 'Most web development sites focus purely on utility, but Webcrafticx transforms it into an art form. The design ethos balances minimalism with depth, making complex web-building accessible without sacrificing sophistication.I really appreciate the work of WebcrafticX.'
   },
-  // {
-  //   name: 'David Chen',
-  //   company: 'InnovateCorp',
-  //   position: 'Marketing Director',
-  //   image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80',
-  //   content: "We've worked with several agencies in the past, but none have delivered the level of quality and ROI that this team consistently provides. They're true partners in our success."
-  // },
+  {
+    name: 'Rishi',
+    company: 'Mock Period',
+    position: 'CMO',
+    image: rishi,
+    content: "I recently had the opportunity to use the Mock Period software developed by Web Crafticx, and I must say, it's a game changer. The software makes mock tests easily accessible and incredibly effective for students."
+  },
   {
    name: "Anonymous",
     company: "Anonymous",
