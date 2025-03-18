@@ -11,6 +11,8 @@ import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 import ProjectModal from '../components/ProjectModal';
+import { Helmet } from "react-helmet-async";
+
 
 const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,6 +56,12 @@ const Index = () => {
   }, []);
   
   return (
+    <>
+     <Helmet>
+        <title>Webcrafticx | Website & App Development, SEO Optimization</title>
+        <meta name="description" content="We provide top-quality web development, SEO, UI/UX design, and app development." />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
     <div className="relative" ref={containerRef}>
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-600 to-indigo-700 z-[100] origin-left"
@@ -137,6 +145,7 @@ const Index = () => {
         </svg>
       </motion.a>
     </div>
+    </>
   );
 };
 

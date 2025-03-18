@@ -8,11 +8,14 @@ import NotFound from "./pages/NotFound";
 import TermsandCondition from "./components/TermsandCondition";
 import RefundPolicy from "./components/RefundPolicy";
 import PrivacyPolicy from "./components/PrivacyPolicy";
+import { HelmetProvider } from "react-helmet-async";
+
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
     <TooltipProvider>
       <Toaster />
       <Sonner />
@@ -27,6 +30,7 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
+    </HelmetProvider>
   </QueryClientProvider>
 );
 
