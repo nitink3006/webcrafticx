@@ -22,7 +22,6 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="/terms" element={<TermsWrapper />} />
           <Route path="/refund" element={<RefundWrapper />} />
           <Route path="/privacy" element={<PrivacyWrapper />} />
@@ -34,7 +33,6 @@ const App = () => (
   </QueryClientProvider>
 );
 
-// Wrapper to ensure cursor works
 const TermsWrapper = () => {
   return (
     <div style={{ cursor: "auto", pointerEvents: "all", minHeight: "100vh" }}>
@@ -43,7 +41,6 @@ const TermsWrapper = () => {
   );
 };
 
-// Wrapper to ensure cursor works
 const RefundWrapper = () => {
   return (
     <div style={{ cursor: "auto", pointerEvents: "all", minHeight: "100vh" }}>
@@ -52,7 +49,6 @@ const RefundWrapper = () => {
   );
 };
 
-// Wrapper to ensure cursor works
 const PrivacyWrapper = () => {
   return (
     <div style={{ cursor: "auto", pointerEvents: "all", minHeight: "100vh" }}>

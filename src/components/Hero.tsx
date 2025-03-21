@@ -140,7 +140,6 @@ const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Interactive floating elements that follow mouse */}
         <AnimatePresence>
           <motion.div
             className="absolute -left-10 top-1/3 w-12 h-12 md:w-20 md:h-20 rounded-full bg-gradient-to-r from-blue-400 to-indigo-500 opacity-30 z-10 hidden md:block"
@@ -223,7 +222,7 @@ const Hero = () => {
           }}
         >
           <motion.a 
-            href="#about"
+            href="about"
             className="flex flex-col items-center text-indigo-600 hover:text-indigo-700 transition-colors"
             animate={{ 
               y: [0, 10, 0],

@@ -10,8 +10,8 @@ export const fadeUp: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1]
+      duration: 0.5,  // Reduced from 0.7s
+      ease: [0.25, 1, 0.35, 1] 
     }
   }
 };
@@ -24,8 +24,8 @@ export const fadeIn: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1]
+      duration: 0.5,  // Reduced from 0.7s
+      ease: [0.25, 1, 0.35, 1]
     }
   }
 };
@@ -36,8 +36,8 @@ export const staggerContainer: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.3
+      staggerChildren: 0.08,  // Faster stagger effect
+      delayChildren: 0.2
     }
   }
 };
@@ -48,9 +48,9 @@ export const mouseTracker = (mouseX: number, mouseY: number, factor = 1) => ({
   y: (mouseY - 0.5) * factor,
   transition: {
     type: "spring",
-    damping: 15,
-    stiffness: 150,
-    mass: 0.1
+    damping: 8,  // Reduced from 15 to 8 for snappier response
+    stiffness: 200, // Increased from 150 to 200 for quicker reaction
+    mass: 0.05
   }
 });
 
@@ -72,8 +72,9 @@ export const mouseParallaxChild = (depth: number = 10): Variants => ({
       y,
       transition: {
         type: "spring",
-        stiffness: 75,
-        mass: 0.5
+        stiffness: 100, // Increased stiffness
+        damping: 10, // Lower damping for smooth feel
+        mass: 0.1
       }
     };
   }

@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail, Send, Clock, CheckCircle } from 'lucide-react';
 import { fadeUp, staggerContainer } from '../utils/animations';
 import emailjs from '@emailjs/browser';
 import { Link } from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
 
 const contactInfo = [
   {
@@ -106,6 +107,16 @@ const Contact = () => {
   };
   
   return (
+    <>
+     <Helmet>
+        <title>Contact Us - Webcrafticx | Get in Touch</title>
+        <meta
+          name="description"
+          content="Have questions? Contact Webcrafticx for expert web development, app development, UI/UX design, and SEO services."
+        />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://webcrafticx.com/contact" />
+      </Helmet>
     <section id="contact" className="section bg-white relative z-20">
       <motion.div 
         ref={ref}
@@ -327,6 +338,7 @@ const Contact = () => {
         </div>
       </motion.div>
     </section>
+    </>
   );
 };
 

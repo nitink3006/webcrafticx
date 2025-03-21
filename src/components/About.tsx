@@ -3,6 +3,8 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Award, Users, Globe, TrendingUp } from 'lucide-react';
 import { staggerContainer, fadeUp } from '../utils/animations';
+import { Helmet } from "react-helmet-async";
+
 
 const stats = [
   { 
@@ -32,6 +34,13 @@ const About = () => {
   const isInView = useInView(ref, { once: false, amount: 0.2 });
   
   return (
+    <>
+    <Helmet>
+        <title>About Us - Webcrafticx | Expert Web Development & SEO</title>
+        <meta name="description" content="Webcrafticx specializes in web development, UI/UX design, SEO, and mobile app development. Learn more about our expert team!" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://webcrafticx.com/about" />
+      </Helmet>
     <section id="about" className="section bg-slate-50 relative z-20">
       <motion.div 
         ref={ref}
@@ -146,6 +155,7 @@ const About = () => {
         </motion.div> */}
       </motion.div>
     </section>
+    </>
   );
 };
 

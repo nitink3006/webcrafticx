@@ -9,6 +9,7 @@ import bus from "../../public/bus.png"
 import opus from "../../public/opus.png"
 import urban from "../../public/urban.png"
 import fabspin from "../../public/fabspin.png"
+import { Helmet } from 'react-helmet-async';
 
 const projects = [
  {
@@ -32,7 +33,7 @@ const projects = [
   category: 'Web Development',
   image: bus,
   description: 'A smart bus service platform designed for parents to monitor their child’s journey in real-time, receive instant notifications, and make secure payments effortlessly. The platform ensures safety, transparency, and convenience for both parents and service providers.',
-  link: 'https://architectural-studio-lab.vercel.app/'
+  link: 'https://bus-service-rosy.vercel.app/'
 }
 ,
 // {
@@ -47,7 +48,7 @@ const projects = [
   category: 'Web Development',
   image: opus,
   description: 'An innovative platform that connects users with professional interior designers, offering virtual consultations, 3D design previews, and budget-friendly customization options. It streamlines project planning, material selection, and real-time collaboration for a seamless design experience.',
-  link: 'https://bus-service-rosy.vercel.app/'
+  link: 'https://architectural-studio-lab.vercel.app/'
 },
 {
   title: 'E-Commerce Platform',
@@ -73,6 +74,14 @@ const Work = () => {
   const isInView = useInView(ref, { once: true, amount: 0.05 });
   
   return (
+    <>
+    <Helmet>
+  <title>Our Work - Webcrafticx | Web & App Development Portfolio</title>
+  <meta name="description" content="Explore our portfolio of successful web and app development projects, showcasing our expertise in UI/UX and SEO." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webcrafticx.com/work" />
+</Helmet>
+
     <section id="work" className="section bg-white relative z-20">
       <motion.div 
         ref={ref}
@@ -165,6 +174,7 @@ const Work = () => {
         </motion.div>
       </motion.div>
     </section>
+    </>
   );
 };
 

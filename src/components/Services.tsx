@@ -9,6 +9,8 @@ import {
   Globe,
 } from "lucide-react";
 import { staggerContainer, fadeUp } from "../utils/animations";
+import { Helmet } from "react-helmet-async";
+
 
 const services = [
   {
@@ -60,6 +62,13 @@ const Services = () => {
   const isInView = useInView(ref, { once: false, amount: 0.2 });
 
   return (
+    <>
+    <Helmet>
+  <title>Our Services - Webcrafticx | Web & App Development, SEO</title>
+  <meta name="description" content="Discover our top-rated services, including web development, app development, UI/UX design, and SEO optimization at Webcrafticx." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://webcrafticx.com/services" />
+</Helmet>
     <section id="services" className="section bg-white relative z-20">
       <motion.div
         ref={ref}
@@ -113,6 +122,8 @@ const Services = () => {
         </div>
       </motion.div>
     </section>
+    </>
+
   );
 };
 
