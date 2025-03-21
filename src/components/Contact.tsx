@@ -26,7 +26,6 @@ const Contact = () => {
   const emailFormRef = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.2 });
   const isFormInView = useInView(formRef, { once: false, amount: 0.2 });
-  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -109,8 +108,8 @@ const Contact = () => {
   return (
     <>
      <Helmet>
-        <title>Contact Us - Webcrafticx | Get in Touch</title>
-        <meta
+     <title>Webcrafticx | Web Development, App Development & SEO Optimization</title>
+     <meta
           name="description"
           content="Have questions? Contact Webcrafticx for expert web development, app development, UI/UX design, and SEO services."
         />

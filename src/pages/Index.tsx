@@ -58,8 +58,8 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Webcrafticx</title>
-        <meta name="description" content="We provide top-quality web development, SEO, UI/UX design, and app development." />
+      <title>Webcrafticx | Web Development, App Development & SEO Optimization</title>
+      <meta name="description" content="We provide top-quality web development, SEO, UI/UX design, and app development." />
         <meta name="robots" content="index, follow" />
       </Helmet>
       <div className="relative" ref={containerRef}>
