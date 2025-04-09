@@ -42,7 +42,7 @@ const Navbar = () => {
   // Close mobile menu when resizing to desktop
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768 && mobileMenuOpen) {
+      if (window.innerWidth >= 1024 && mobileMenuOpen) {
         setMobileMenuOpen(false);
       }
     };
@@ -125,7 +125,7 @@ const Navbar = () => {
 
   return (
     <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 md:px-10"
+      className="fixed top-0 left-0 right-0 z-50 px-6 py-4 lg:px-10"
       style={{ 
         backgroundColor: navBackground,
         boxShadow: navShadow,
@@ -137,21 +137,19 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <motion.a 
           href="#home"
-          className="font-bold text-2xl md:text-3xl z-10 flex items-center"
+          className="font-bold text-2xl lg:text-3xl z-10 flex items-center"
           style={{ color: textColor }}
           variants={logoVariants}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-800">
-            {/* <img src={logo} alt="" /> */}
             WebCrafticX
           </span>
-          {/* <span className="w-2 h-2 ml-1 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600"></span> */}
         </motion.a>
         
-        {/* Desktop Navigation with enhanced hover effects */}
-        <nav className="hidden md:flex space-x-8">
+        {/* Desktop Navigation  */}
+        <nav className="hidden lg:flex space-x-8">
           {navLinks.map((link, index) => (
             <motion.a
               key={link.title}
@@ -181,7 +179,7 @@ const Navbar = () => {
         </nav>
         
         <motion.button
-          className="button-primary hidden md:block bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-500/20"
+          className="button-primary hidden lg:block bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-500/20"
           variants={navItemVariants}
           custom={navLinks.length}
           whileHover={{ scale: 1.05, boxShadow: "0 15px 25px rgba(79, 70, 229, 0.3)" }}
@@ -191,9 +189,9 @@ const Navbar = () => {
           Start a Project
         </motion.button>
         
-        {/* Mobile Navigation Toggle with improved design */}
+        {/* Mobile Navigation Toggle  */}
         <motion.button
-          className="md:hidden z-50 p-2 bg-white/80 rounded-full backdrop-blur-sm shadow-md"
+          className="lg:hidden z-50 p-2 bg-white/80 rounded-full backdrop-blur-sm shadow-md"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           whileTap={{ scale: 0.9 }}
           variants={logoVariants}
@@ -206,11 +204,11 @@ const Navbar = () => {
         </motion.button>
       </div>
       
-      {/* Enhanced Mobile Navigation Menu with full height and background */}
+      {/* Enhanced Mobile Navigation Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            className="fixed inset-0 z-40 md:hidden h-screen flex flex-col"
+            className="fixed inset-0 z-40 lg:hidden h-screen flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
